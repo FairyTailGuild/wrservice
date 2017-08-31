@@ -1,0 +1,10 @@
+/**
+ * @author yangyongxia
+ */
+
+@charset "utf-8";
+.goods_confirm_letter_mt20{margin-top: 20px;}
+.goods_confirm_letter_ml15{margin-left: 15px;}
+.goods_confirm_letters_none{display: none;}
+.goods_confirm_letters_center{text-align: center;}
+#goods_confirm_letter_list thead th, #goods_confirm_letter_list tbody td{text-align: center;}

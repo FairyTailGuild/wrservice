@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv = "Content-Type" content = "text/html; charset=utf-8">
+  <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
+  <meta name = "viewport" content = "width=device-width, initial-scale=1">
+  <link rel = "stylesheet" href = "../../plugin/bootstrap/3.3.7/css/bootstrap.css">
+  <link rel = "stylesheet" href = "../../plugin/jquery_ui/1.12.1/jquery-ui.min.css">
+  <link rel = "stylesheet" href = "../../plugin/jquery_timepicker_addon/1.6.3/jquery-ui-timepicker-addon.css" />
+  <link rel = "stylesheet" href = "../../css/custom_modal.css">
+  <link rel = "stylesheet" href = "../upload_attachment/upload_attachment.css"/>
+  <link rel = "stylesheet" href = "contract_warehouse.css">
+  <script src = "../../plugin/jquery/1.12.4/jquery.min.js"></script>    
+  <script src = "../../plugin/jquery_ui/1.12.1/jquery-ui.min.js"></script>
+  <script src = "../../plugin/bootstrap/3.3.7/js/bootstrap.js"></script>
+  <script src = "../../plugin/jquery_timepicker_addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>  
+  <script src = "../../plugin/jquery_timepicker_addon/1.6.3/init.js"></script>
+  <script src = "../../js/toolkit.js"></script>
+  <script src = "../../js/configure.js"></script>
+  <script src = "../upload_attachment/upload_attachment.js" type = "text/javascript" charset = "utf-8"></script>
+  <script src = "contract_warehouse.js"></script>
+  <script>
+    $(document).ready(function() {
+      contract_warehouse_output("#contract_warehouse_content");
+      //日历插件
+      widget_datepicker_init();
+      //清空原始数据
+      contract_warehouse_clear_raw_data();
+      //服务器数据
+      contract_warehouse_server_data_cover();
+      //加载数据
+      contract_warehouse_fill_variable_data();
+      //搜索获取出租方和承租方
+      contract_warehouse_enterprise_data();
+      //分页
+      $(document).on("click", "#contract_warehouse_pages li", function() {
+        var contract_warehouse_pages = $(this);
+        contract_warehouse_pages_fun(contract_warehouse_pages);
+      });
+      //添加储罐合同模态框
+      $(document).on("click", "#contract_warehouse_plus", function() {
+        contract_warehouse_add_modle();
+      });
+      //添加储罐合同数据
+      $(document).on("click", "#contract_warehouse_add_btn", function() {
+        var contract_warehouse_this = $(this);
+        contract_warehouse_add_data(contract_warehouse_this);
+      });
+      //修改储罐合同模态框
+      $(document).on("click", ".contract_warehouse_pencil", function() {
+        var contract_warehouse_this = $(this);
+        contract_warehouse_edit_modle( contract_warehouse_this );
+      });
+      //修改储罐保存数据
+      $(document).on("click", "#contract_warehouse_edit_modle_btn", function() {
+        var contract_warehouse_this = $(this);
+        contract_warehouse_edit_data(contract_warehouse_this);
+      });
+      //删除储罐合同模态框
+      $(document).on("click", ".contract_warehouse_remove", function() {
+        var contract_warehouse_this = $(this);
+        contract_warehouse_delete_modle(contract_warehouse_this);
+      });
+      //删除储罐合同数据
+      $(document).on("click", "#contract_warehouse_delete_btn", function() {
+        var contract_warehouse_this = $(this);
+        contract_warehouse_delete_data(contract_warehouse_this);
+      });
+      //详情
+      $(document).on("click", ".contract_warehouse_info", function() {
+        var contract_warehouse_this = $(this);
+        contract_warehouse_info_modle(contract_warehouse_this);
+      });
+      //合同号搜索
+      $(document).on("click", "#contract_warehouse_search_btn", function() {
+        var contract_warehouse_search_btn_this = $(this);
+        contract_warehouse_search(contract_warehouse_search_btn_this);
+      });
+      //合同号模糊搜索
+      $(document).on("click", "#contract_warehouse_fuzzy", function() {
+        contract_warehouse_search_fuzzy();
+      });
+    });
+  </script>
+</head>
+<body>
+  <div id = "contract_warehouse_content"></div>
+</body>
+</html>
+

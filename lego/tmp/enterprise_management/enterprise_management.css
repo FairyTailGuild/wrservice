@@ -1,0 +1,25 @@
+/**
+ * @author yangyongxia
+ */
+
+.enterprise_management_mt20 {
+  margin-top: 20px;
+}
+#enterprise_management_list span {
+  margin-left: 15px;
+}
+#enterprise_management_condition .icheckbox_square-blue {
+  margin-right: 15px;
+}
+#enterprise_management_list th, #enterprise_management_list tr {
+  text-align: center;
+}
+#enterprise_management_list {
+  margin-bottom: 0;
+}
+#enterprise_management_add_modal .panel, #enterprise_management_edit_modal .panel, #enterprise_management_detail_modal .panel{
+  border: 0;
+}
+#enterprise_management_list thead{
+  text-align: center;
+}

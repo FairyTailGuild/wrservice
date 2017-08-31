@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv = "Content-Type" content = "text/html; charset=utf-8">
+  <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
+  <meta name = "viewport" content = "width=device-width, initial-scale=1">
+  <link rel = "stylesheet" href = "../../plugin/bootstrap/3.3.7/css/bootstrap.css">
+  <link rel = "stylesheet" href = "../../plugin/jquery_ui/1.12.1/jquery-ui.min.css">
+  <link rel = "stylesheet" href = "../../plugin/jquery_timepicker_addon/1.6.3/jquery-ui-timepicker-addon.css" />
+  <link rel = "stylesheet" href = "../../css/custom_modal.css">
+  <link rel = "stylesheet" href = "../upload_attachment/upload_attachment.css"/>
+  <link rel = "stylesheet" href = "report_shore_tank.css">
+  <script src = "../../plugin/jquery/1.12.4/jquery.min.js"></script>    
+  <script src = "../../plugin/jquery_ui/1.12.1/jquery-ui.min.js"></script>
+  <script src = "../../plugin/bootstrap/3.3.7/js/bootstrap.js"></script>
+  <script src = "../../plugin/jquery_timepicker_addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
+  <script src = "../../plugin/jquery_timepicker_addon/1.6.3/init.js"></script>
+  <script src = "../../js/toolkit.js"></script>
+  <script src = "../../js/configure.js"></script>
+  <script src = "../upload_attachment/upload_attachment.js" type = "text/javascript" charset = "utf-8"></script>
+  <script src = "report_shore_tank.js"></script>
+  <script>
+    $(document).ready(function() {
+      report_shore_tank_content("#report_shore_tank_content");
+      // 初始化
+      report_shore_tank_clear_raw_data();
+      // 服务器数据
+      report_shore_tank_server_data_cover();
+      // 赋值
+      report_shore_tank_fill_variable_data();
+      // 添加商检单模态框
+      $(document).on("click", "#report_shore_tank_add_modle_btn", function() {
+        var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
+        report_shore_tank_add_modal(vehicle_information_uuid);
+      });
+      // 添加商检单
+      $(document).on("click", "#report_shore_tank_add_modal .add_btn", function() {
+        var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
+        report_shore_tank_add_data();
+      });
+      // 修改商检单模态框
+      $(document).on("click", ".report_shore_tank_edit", function() {
+        var uuid = $(this).data("uuid");
+        var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
+        report_shore_tank_get_letter(uuid);
+        report_shore_tank_edit_modal(uuid);
+      });
+      // 修改商检单
+      $(document).on("click", "#report_shore_tank_edit_modal .edit_btn", function() {
+        var uuid = $(this).data("uuid");
+        var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
+        report_shore_tank_edit_data(uuid);
+      });
+      // 商检单详情模态框
+      $(document).on("click", ".report_shore_tank_detail", function() {
+        var uuid = $(this).data("uuid");
+        report_shore_tank_get_letter(uuid)
+        report_shore_tank_detail_modal();
+      });
+      // 删除商检单模态框
+      $(document).on("click", ".report_shore_tank_delete", function() {
+        var uuid = $(this).data("uuid");
+        var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
+        report_shore_tank_delete_modal(uuid, vehicle_information_uuid);
+      });
+      // 删除商检单
+      $(document).on("click", "#report_shore_tank_delete_modal .remove", function() {
+        var uuid = $(this).data("uuid");
+        var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
+        report_shore_tank_delete_data(uuid, vehicle_information_uuid);
+      });
+    });
+  </script>
+</head>
+<body>
+  <div id = "report_shore_tank_content"></div>
+</body>
+</html>

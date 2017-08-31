@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv = "Content-Type" content = "text/html; charset=utf-8">
+  <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
+  <meta name = "viewport" content = "width=device-width, initial-scale=1">
+  <link rel = "stylesheet" href = "../../plugin/bootstrap/3.3.7/css/bootstrap.css">
+  <link rel = "stylesheet" href = "../../plugin/jquery_ui/1.12.1/jquery-ui.min.css">
+  <link rel = "stylesheet" href = "../../plugin/jquery_timepicker_addon/1.6.3/jquery-ui-timepicker-addon.css" />
+  <link rel = "stylesheet" href = "../../css/custom_modal.css">
+  <link rel = "stylesheet" href = "../upload_attachment/upload_attachment.css"/>
+  <link rel = "stylesheet" href = "deliver_entrust_letter.css">
+  <script src = "../../plugin/jquery/1.12.4/jquery.min.js"></script>    
+  <script src = "../../plugin/jquery_ui/1.12.1/jquery-ui.min.js"></script>
+  <script src = "../../plugin/bootstrap/3.3.7/js/bootstrap.js"></script>
+  <script src = "../../plugin/jquery_timepicker_addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
+  <script src = "../../plugin/jquery_timepicker_addon/1.6.3/init.js"></script>
+  <script src = "../../js/toolkit.js"></script>
+  <script src = "../../js/configure.js"></script>
+  <script src = "../upload_attachment/upload_attachment.js" type = "text/javascript" charset = "utf-8"></script>
+  <script src = "deliver_entrust_letter.js"></script>
+  <script>
+    $(document).ready(function() {
+      deliver_entrust_letter_content("#deliver_entrust_letter_content");
+      // 日历插件
+      widget_datepicker_init();
+      // 初始化
+      deliver_entrust_letter_clear_raw_data();
+      // 服务器数据
+      deliver_entrust_letter_server_data_cover();
+      // 赋值
+      deliver_entrust_letter_fill_variable_data();
+      // 添加提货委托函模态框
+      $(document).on("click", "#deliver_entrust_letter_add_modal_btn", function() {
+        deliver_entrust_letter_add_modal();
+      });
+      // 添加提货委托函
+      $(document).on("click", "#deliver_entrust_letter_add_modal .add_btn", function() {
+        deliver_entrust_letter_add_data();
+      });
+      // 修改提货委托函模态框
+      $(document).on("click", ".deliver_entrust_letter_edit", function() {
+        var uuid = $(this).data("uuid");
+        var contract_code = $(this).data("contract_code");
+        deliver_entrust_letter_get_letter(uuid);
+        deliver_entrust_letter_edit_modal(uuid, contract_code);
+      });
+      // 修改提货委托函
+      $(document).on("click", "#deliver_entrust_letter_edit_modal .edit_btn", function() {
+        var uuid = $(this).data("uuid");
+        var contract_code = $(this).data("contract_code");
+        deliver_entrust_letter_edit_data(uuid, contract_code);
+      });
+      // 提货委托函详情模态框
+      $(document).on("click", ".deliver_entrust_letter_detail", function() {
+        var uuid = $(this).data("uuid");
+        deliver_entrust_letter_get_letter(uuid)
+        deliver_entrust_letter_detail_modal();
+      });
+      // 删除提货委托函模态框
+      $(document).on("click", ".deliver_entrust_letter_delete", function() {
+        var uuid = $(this).data("uuid");
+        var contract_code = $(this).data("contract_code");
+        deliver_entrust_letter_delete_modal(uuid, contract_code);
+      });
+      // 删除提货委托函
+      $(document).on("click", "#deliver_entrust_letter_delete_modal .remove", function() {
+        var uuid = $(this).data("uuid");
+        var contract_code = $(this).contract_code;
+        deliver_entrust_letter_delete_data(uuid, contract_code);
+      });
+    });
+  </script>
+</head>
+<body>
+  <div id = "deliver_entrust_letter_content"></div>
+</body>
+</html>

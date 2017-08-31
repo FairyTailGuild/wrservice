@@ -1,0 +1,741 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv = "Content-Type" content = "text/html; charset=utf-8">
+  <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
+  <meta name = "viewport" content = "width=device-width, initial-scale=1">
+  <link rel = "stylesheet" href = "../../plugin/bootstrap/3.3.7/css/bootstrap.css">
+  <link rel = "stylesheet" href = "../../plugin/jquery_ui/1.12.1/jquery-ui.min.css">
+  <link rel = "stylesheet" href = "../../plugin/jquery_timepicker_addon/1.6.3/jquery-ui-timepicker-addon.css" />
+  <link rel = "stylesheet" href="../../plugin/icheck/1.x/skins/all.css" type = "text/css"/>
+  <link rel = "stylesheet" href = "../../css/custom_modal.css">
+  <link rel = "stylesheet" href = "../upload_attachment/upload_attachment.css"/>
+  <!--收款记录-->
+  <link rel="stylesheet" type="text/css" href="../paid_record/paid_record.css"/>
+  <!--物流合同样式-->
+  <link rel = "stylesheet" href = "../contract_logistics/contract_logistics.css">
+  <!--物流对账单样式-->
+  <link rel = "stylesheet" href = "../settlement_bill_logistics/settlement_bill_logistics.css">
+  <!--车船信息样式-->
+  <link rel = "stylesheet" href = "../vehicle_information/vehicle_information.css">
+  <!--出库单-->
+  <link rel="stylesheet" type="text/css" href="../godown_exit/godown_exit.css"/>
+  <!--入库单-->
+  <link rel="stylesheet" type="text/css" href="../godown_entry/godown_entry.css"/>
+  <!--化验单-->
+  <link rel="stylesheet" type="text/css" href="../report_test/report_test.css"/>
+  <!--商检单-->
+  <link rel="stylesheet" type="text/css" href="../report_shore_tank/report_shore_tank.css"/>
+  <!--提货委托函-->
+  <link rel="stylesheet" type="text/css" href="../deliver_entrust_letter/deliver_entrust_letter.css"/>
+  <!--货物确认函-->
+  <link rel="stylesheet" type="text/css" href="../goods_confirm_letter/goods_confirm_letter.css"/>
+  <!--销售结算函样式-->
+  <link rel = "stylesheet" href = "../settlement_bill_sale/settlement_bill_sale.css">
+  <!--发票信息样式-->
+  <link rel = "stylesheet" href = "../invoice_information/invoice_information.css">
+  <!--销售合同样式-->
+  <link rel = "stylesheet" href = "../contract_sale/contract_sale.css">
+  <script src = "../../plugin/jquery/1.12.4/jquery.min.js"></script>    
+  <script src = "../../plugin/jquery_ui/1.12.1/jquery-ui.min.js"></script>
+  <script src = "../../plugin/bootstrap/3.3.7/js/bootstrap.js"></script>
+  <script src = "../../plugin/jquery_timepicker_addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
+  <script src = "../../plugin/icheck/1.x/icheck.js" type = "text/javascript" charset="utf-8"></script>
+  <script src = "../../plugin/jquery_timepicker_addon/1.6.3/init.js"></script>
+  <script src = "../../js/toolkit.js"></script>
+  <script src = "../../js/configure.js"></script>
+  <script src = "../upload_attachment/upload_attachment.js" type = "text/javascript" charset = "utf-8"></script>
+  <!--收款记录-->
+  <script src = "../paid_record/paid_record.js"></script>
+  <!--物流合同-->
+  <script src = "../contract_logistics/contract_logistics.js"></script>
+  <!--物流对账单-->
+  <script src = "../settlement_bill_logistics/settlement_bill_logistics.js"></script>
+  <!--车船信息-->
+  <script src = "../vehicle_information/vehicle_information.js"></script>
+  <!--出库单-->
+  <script src="../godown_exit/godown_exit.js" type="text/javascript" charset="utf-8"></script>
+  <!--入库单-->
+  <script src="../godown_entry/godown_entry.js" type="text/javascript" charset="utf-8"></script>
+  <!--化验单-->
+  <script src="../report_test/report_test.js" type="text/javascript" charset="utf-8"></script>
+  <!--商检单-->
+  <script src="../report_shore_tank/report_shore_tank.js" type="text/javascript" charset="utf-8"></script>
+  <!--提货委托函-->
+  <script src="../deliver_entrust_letter/deliver_entrust_letter.js" type="text/javascript" charset="utf-8"></script>
+  <!--货物确认函-->
+  <script src="../goods_confirm_letter/goods_confirm_letter.js" type="text/javascript" charset="utf-8"></script>
+  <!--销售结算函-->
+  <script src = "../settlement_bill_sale/settlement_bill_sale.js"></script>
+  <!--发票信息-->
+  <script src = "../invoice_information/invoice_information.js"></script>
+  <!--本页销售合同-->
+  <script src = "../contract_sale/contract_sale_all_panel.js"></script>
+  <script src = "../contract_sale/contract_logistics_all_panle.js"></script>
+  <script src="../contract_sale/vehicle_information_all_panel.js" type="text/javascript" charset="utf-8"></script>
+  <script src = "../contract_sale/contract_sale.js"></script>
+  <script src = "../check_login/check_login.js"></script>
+  <script>
+    $(document).ready(function() {
+      check_login();
+      contract_sale_output("#contract_sale_content");
+      //日历插件
+      widget_datepicker_init();
+      //清空原始数据
+      contract_sale_clear_raw_data();
+      //服务器数据
+      contract_sale_server_data_cover("1");
+      //加载数据
+      contract_sale_fill_variable_data();
+      //搜索获取购买方和销售方
+      contract_sale_enterprise_data_val();
+      //搜索库区
+      contract_sale_warehouse_data_val();
+      //分页
+      $(document).on("click", "#contract_sales_pages li", function() {
+        contract_sale_pages_fun($(this));
+      });
+      //添加销售合同模态框
+      $(document).on("click", "#contract_sales_add_modle", function() {
+        contract_sales_add_modle_func();
+      });
+      //添加销售合同数据
+      $(document).on("click", "#contract_sales_add_modle_prop_btn", function() {
+        contract_sales_add_data_func($(this), "1");
+      });
+      //修改销售合同模态框
+      $(document).on("click", ".contract_sale_modle_pencil", function() {
+        contract_sales_edit_modle_func($(this), "1");
+      });
+      //修改销售合同数据
+      $(document).on("click", "#contract_sales_edit_modle_prop_btn", function() {
+        contract_sales_edit_data_func($(this),"1");
+      });
+      //删除销售合同模态框
+      $(document).on("click", ".contract_sale_modle_remove", function() {
+        contract_sales_delete_modle_func($(this));
+      });
+      //删除销售合同数据
+      $(document).on("click", "#contract_sales_delete_modle_prop_btn", function() {
+        contract_sales_delete_data_func($(this));
+      });
+      //详情
+      $(document).on("click", ".contract_sale_modle_info", function() {
+        contract_sales_info_modle_func($(this),"1");
+      });
+      //合同展开详情按钮
+      $(document).on("click", ".contract_sale_open_btn", function() {
+        contract_sale_open_info_func($(this));
+      });
+      //数据筛选
+      $(document).on("ifClicked", ".contract_sale_data_screening_btn", function() {
+        contract_sale_data_screening_func($(this));
+      });
+      //合同号搜索
+      $(document).on("click", "#contract_sale_search_btn", function() {
+        contract_sale_search_btn_func();
+      });
+      //合同模糊搜索
+      $(document).on("click", "#contract_sale_search_fuzzy_btn", function() {
+        contract_sale_search_fuzzy_btn_func();
+      });
+      //复选框
+      $("[type='checkbox']").iCheck({
+        checkboxClass: 'icheckbox_square-blue',
+      });
+      //收款记录////////////////////////////////////
+      
+      //物流合同////////////////////////////////////
+      $(document).on("click", "#contract_logistics_add_modle", function() {
+        var contract_sales_contract_code = $(this).attr("trade_contract_code");
+        get_sale_object_list(contract_logistics_list, contract_sales_contract_code).contract_logistics_add_modle_func($(this));
+      });
+      //添加物流合同数据
+      $(document).on("click", "#contract_logistics_add_data_btn", function() {
+        var contract_sales_contract_code = $(this).attr("trade_contract_code");
+        get_sale_object_list(contract_logistics_list, contract_sales_contract_code).contract_logistics_add_data_func($(this));
+      });
+      //修改物流合同模态框
+      $(document).on("click", ".contract_logistics_modle_pencil", function() {
+        var contract_sales_contract_code = $(this).parent().parent().parent().parent().attr("trade_contract_code");
+        get_sale_object_list(contract_logistics_list, contract_sales_contract_code).contract_logistics_edit_modle_func($(this));
+      });
+      //修改物流合同数据
+      $(document).on("click", "#contract_logistics_edit_data_btn", function() {
+        var contract_sales_contract_code = $(this).attr("trade_contract_code");
+        get_sale_object_list(contract_logistics_list, contract_sales_contract_code).contract_logistics_edit_data_func($(this));
+      });
+      //删除物流合同模态框
+      $(document).on("click", ".contract_logistics_modle_remove", function() {
+        var contract_sales_contract_code = $(this).parent().parent().parent().parent().attr("trade_contract_code");
+        get_sale_object_list(contract_logistics_list, contract_sales_contract_code).contract_logistics_delete_modle_func($(this));
+      });
+      //删除物流合同数据
+      $(document).on("click", "#contract_logistics_delete_modle_prop_btn", function() {
+        var contract_sales_contract_code = $(this).attr("trade_contract_code");
+        get_sale_object_list(contract_logistics_list, contract_sales_contract_code).contract_logistics_delete_data_func($(this));
+      });
+      //详情
+      $(document).on("click", ".contract_logistics_modle_info", function() {
+        var contract_sales_contract_code = $(this).parent().parent().parent().parent().attr("trade_contract_code");
+        get_sale_object_list(contract_logistics_list, contract_sales_contract_code).contract_logistics_info_modle_func($(this));
+      });
+      //合同展开详情按钮
+      $(document).on("click", ".contract_logistics_open_btn", function() {
+        contract_logistics_open_info_func($(this));
+      });
+      
+      //车船信息/////////////////////////////////////
+      $(document).on("click", "#vehicle_information_add_modle", function() {
+        var trade_contract_code = $(this).attr("contract_code");
+        get_sale_object_list(vehicle_information_list, trade_contract_code).vehicle_information_add_modle_func($(this));
+      });
+      //添加车船信息数据
+      $(document).on("click", "#vehicle_information_add_data_btn", function() {
+        var trade_contract_code = $(this).attr("contract_code");
+        get_sale_object_list(vehicle_information_list, trade_contract_code).vehicle_information_add_data_func_sale($(this));
+      });
+      //修改车船信息模态框
+      $(document).on("click", ".vehicle_information_modle_pencil", function() {
+        var trade_contract_code = $(this).parent().parent().parent().parent().attr("contract_code");
+        get_sale_object_list(vehicle_information_list, trade_contract_code).vehicle_information_edit_modle_func($(this));
+      });
+      //修改车船信息数据
+      $(document).on("click", "#vehicle_information_edit_data_btn", function() {
+        var trade_contract_code = $(this).attr("contract_code");
+        get_sale_object_list(vehicle_information_list, trade_contract_code).vehicle_information_edit_data_func_sale($(this));
+      });
+      //删除车船信息模态框
+      $(document).on("click", ".vehicle_information_modle_remove", function() {
+        var trade_contract_code = $(this).parent().parent().parent().parent().attr("contract_code");
+        get_sale_object_list(vehicle_information_list, trade_contract_code).vehicle_information_delete_modle_func($(this));
+      });
+      //删除车船信息数据
+      $(document).on("click", "#vehicle_information_delete_modle_prop_btn", function() {
+        var trade_contract_code = $(this).attr("contract_code");
+        get_sale_object_list(vehicle_information_list, trade_contract_code).vehicle_information_delete_data_func_sale($(this));
+      });
+      //详情
+      $(document).on("click", ".vehicle_information_modle_info", function() {
+        var trade_contract_code = $(this).parent().parent().parent().parent().attr("contract_code");
+        get_sale_object_list(vehicle_information_list, trade_contract_code).vehicle_information_info_modle_func($(this));
+      });
+      //合同展开详情按钮
+      $(document).on("click", ".vehicle_information_open_btn", function() {
+        vehicle_information_open_info_func($(this));
+      });
+      //销售结算函/////////////////////////////////////////
+      //添加销售结算函模态框
+      $(document).on("click", "#settlement_bill_sale_add_modle", function() {
+        var trade_contract_code = $(this).attr("contract_code");
+        get_sale_object_list(settlement_bill_sale_list, trade_contract_code).settlement_bill_sale_add_modle_func($(this));
+      });
+      //合计 应退货款
+      $(document).on("blur",".volume_corresponding,.price_corresponding,.amount_corresponding",function(){
+        var trade_contract_code = $(this).parent().parent().parent().parent().parent().parent().find(".modal-footer").find(".btn_code").attr("contract_code");
+        get_sale_object_list(settlement_bill_sale_list, trade_contract_code).all_should_change($(this));
+      });
+      //添加销售结算函数据
+      $(document).on("click", "#settlement_bill_sale_add_data_btn", function() {
+        var trade_contract_code = $(this).attr("contract_code");
+        get_sale_object_list(settlement_bill_sale_list, trade_contract_code).settlement_bill_sale_add_data_func($(this));
+      });
+      //修改销售结算函模态框
+      $(document).on("click", ".settlement_bill_sale_modle_pencil", function() {
+        var trade_contract_code = $(this).attr("contract_code");
+        get_sale_object_list(settlement_bill_sale_list, trade_contract_code).settlement_bill_sale_edit_modle_func($(this));
+      });
+      //修改销售结算函数据
+      $(document).on("click", "#settlement_bill_sale_edit_data_btn", function() {
+        var trade_contract_code = $(this).attr("contract_code");
+        get_sale_object_list(settlement_bill_sale_list, trade_contract_code).settlement_bill_sale_edit_data_func($(this));
+      });
+      //删除销售结算函模态框
+      $(document).on("click", ".settlement_bill_sale_modle_remove", function() {
+        var trade_contract_code = $(this).attr("contract_code");
+        get_sale_object_list(settlement_bill_sale_list, trade_contract_code).settlement_bill_sale_delete_modle_func($(this));
+      });
+      //删除销售结算函数据
+      $(document).on("click", "#settlement_bill_sale_delete_modle_prop_btn", function() {
+        var trade_contract_code = $(this).attr("contract_code");
+        get_sale_object_list(settlement_bill_sale_list, trade_contract_code).settlement_bill_sale_delete_data_func($(this));
+      });
+      //详情
+      $(document).on("click", ".settlement_bill_sale_modle_info", function() {
+        var trade_contract_code = $(this).attr("contract_code");
+        get_sale_object_list(settlement_bill_sale_list, trade_contract_code).settlement_bill_sale_info_modle_func($(this));
+      });
+      //发票信息
+      //税率
+      $(document).on("focus", ".invoice_information_tax_rate", function(){
+        var invoice_type = $(this).parent().parent().parent().parent().parent().parent().find(".modal-footer").find(".btn_code").attr("invoice_type");
+        if(1 == invoice_type){
+          var trade_contract_code = $(this).parent().parent().parent().parent().parent().parent().find(".modal-footer").find(".btn_code").attr("contract_code");
+          get_sale_object_list(invoice_information_list, trade_contract_code).invoice_information_tax_focus_change($(this));
+        } else if(0 == invoice_type){
+          var trade_contract_code = $(this).parent().parent().parent().parent().parent().parent().find(".modal-footer").find(".btn_code").attr("contract_code");
+          get_sale_object_list(logistics_invoice_information_list, trade_contract_code).invoice_information_tax_focus_change($(this));
+        }
+        
+      });
+      $(document).on("blur", ".invoice_information_tax_rate", function(){
+        var invoice_type = $(this).parent().parent().parent().parent().parent().parent().find(".modal-footer").find(".btn_code").attr("invoice_type");
+        if(1 == invoice_type){
+          var trade_contract_code = $(this).parent().parent().parent().parent().parent().parent().find(".modal-footer").find(".btn_code").attr("contract_code");
+          get_sale_object_list(invoice_information_list, trade_contract_code).invoice_information_tax_blur_change($(this));
+        } else if(0 == invoice_type){
+          var trade_contract_code = $(this).parent().parent().parent().parent().parent().parent().find(".modal-footer").find(".btn_code").attr("contract_code");
+          get_sale_object_list(logistics_invoice_information_list, trade_contract_code).invoice_information_tax_blur_change($(this));
+        }
+        
+      });
+      //合计
+      $(document).on("blur",".invoice_information_quantity,.invoice_information_price",function(){
+        var invoice_type = $(this).parent().parent().parent().parent().parent().parent().find(".modal-footer").find(".btn_code").attr("invoice_type");
+        if(1 == invoice_type){
+          var trade_contract_code = $(this).parent().parent().parent().parent().parent().parent().find(".modal-footer").find(".btn_code").attr("contract_code");
+          get_sale_object_list(invoice_information_list, trade_contract_code).all_should_change_price($(this));
+        } else if(0 == invoice_type){
+          var trade_contract_code = $(this).parent().parent().parent().parent().parent().parent().find(".modal-footer").find(".btn_code").attr("contract_code");
+          get_sale_object_list(logistics_invoice_information_list, trade_contract_code).all_should_change_price($(this));
+        }
+        
+      });
+      //添加发票信息模态框
+      $(document).on("click", ".invoice_information_add_modle", function() {
+        var invoice_type = $(this).attr("invoice_type");
+        if(1 == invoice_type){
+          var trade_contract_code = $(this).attr("contract_code");
+          get_sale_object_list(invoice_information_list, trade_contract_code).invoice_information_add_modle_func($(this));
+        } else if(0 == invoice_type){
+          var trade_contract_code = $(this).attr("contract_code");
+          get_sale_object_list(logistics_invoice_information_list, trade_contract_code).invoice_information_add_modle_func($(this));
+        }
+      });
+      //添加发票信息数据
+      $(document).on("click", "#invoice_information_add_data_btn", function() {
+        var invoice_type = $(this).attr("invoice_type");
+        if(1 == invoice_type){
+          var trade_contract_code = $(this).attr("contract_code");
+          get_sale_object_list(invoice_information_list, trade_contract_code).invoice_information_add_data_func($(this));
+        } else if(0 == invoice_type) {
+          var trade_contract_code = $(this).attr("contract_code");
+          get_sale_object_list(logistics_invoice_information_list, trade_contract_code).invoice_information_add_data_func($(this));
+        }
+        
+      });
+      //修改发票信息模态框
+      $(document).on("click", ".invoice_information_modle_pencil", function() {
+        var invoice_type = $(this).parent().parent().parent().parent().attr("invoice_type");
+        if(1 == invoice_type) {
+          var trade_contract_code = $(this).attr("contract_code");
+          get_sale_object_list(invoice_information_list, trade_contract_code).invoice_information_edit_modle_func($(this));
+        } else if(0 == invoice_type) {
+          var trade_contract_code = $(this).attr("contract_code");
+          get_sale_object_list(logistics_invoice_information_list, trade_contract_code).invoice_information_edit_modle_func($(this));
+        }
+      });
+      //修改发票信息数据
+      $(document).on("click", "#invoice_information_edit_data_btn", function() {
+        var invoice_type = $(this).attr("invoice_type");
+        if(1 == invoice_type){
+          var trade_contract_code = $(this).attr("contract_code");
+          get_sale_object_list(invoice_information_list, trade_contract_code).invoice_information_edit_data_func($(this));
+        } else if(0 == invoice_type) {
+          var trade_contract_code = $(this).attr("contract_code");
+          get_sale_object_list(logistics_invoice_information_list, trade_contract_code).invoice_information_edit_data_func($(this));
+        }
+      });
+      //删除发票信息模态框
+      $(document).on("click", ".invoice_information_modle_remove", function() {
+        var invoice_type = $(this).parent().parent().parent().parent().attr("invoice_type");
+        if(1 == invoice_type){
+          var trade_contract_code = $(this).attr("contract_code");
+          get_sale_object_list(invoice_information_list, trade_contract_code).invoice_information_delete_modle_func($(this));
+        } else if(0 == invoice_type) {
+          var trade_contract_code = $(this).attr("contract_code");
+          get_sale_object_list(logistics_invoice_information_list, trade_contract_code).invoice_information_delete_modle_func($(this));
+        }
+      });
+      //删除发票信息数据
+      $(document).on("click", "#invoice_information_delete_modle_prop_btn", function() {
+        var invoice_type = $(this).attr("invoice_type");
+        if(1 == invoice_type){
+          var trade_contract_code = $(this).attr("contract_code");
+          get_sale_object_list(invoice_information_list, trade_contract_code).invoice_information_delete_data_func($(this));
+        } else if(0 == invoice_type) {
+          var trade_contract_code = $(this).attr("contract_code");
+          get_sale_object_list(logistics_invoice_information_list, trade_contract_code).invoice_information_delete_data_func($(this));
+        }
+      });
+      //详情
+      $(document).on("click", ".invoice_information_modle_info", function() {
+        var invoice_type = $(this).parent().parent().parent().parent().attr("invoice_type");
+        if(1 == invoice_type){
+          var trade_contract_code = $(this).attr("contract_code");
+          get_sale_object_list(invoice_information_list, trade_contract_code).invoice_information_info_modle_func($(this));
+        } else if(0 == invoice_type) {
+          var trade_contract_code = $(this).attr("contract_code");
+          get_sale_object_list(logistics_invoice_information_list, trade_contract_code).invoice_information_info_modle_func($(this));
+        }
+        
+      });
+      //物流对账单///////////////////////////////
+      $(document).on("click", "#settlement_bill_logistics_add_modle", function() {
+        var contract_logistics_code = $(this).attr("contract_logistics_code");
+        get_sale_object_list(settlement_bill_logistics_list, contract_logistics_code).settlement_bill_logistics_add_modle_func($(this));
+      });
+      //实际损耗
+      $(document).on("blur",".unload_quantity_blur_logistics,.load_quantity_blur_logistics",function() {
+        var contract_logistics_code = $(this).parent().parent().parent().parent().parent().parent().find(".btn_code").attr("contract_code");
+        get_sale_object_list(settlement_bill_logistics_list, contract_logistics_code).actual_loss_change_logistics($(this));
+      });
+      //合计 应退货款
+      $(document).on("blur",".volume_corresponding_logistics,.price_corresponding_logistics,.amount_corresponding_logistics",function(){
+        var contract_logistics_code = $(this).parent().parent().parent().parent().parent().parent().find(".btn_code").attr("contract_code");
+        get_sale_object_list(settlement_bill_logistics_list, contract_logistics_code).all_should_change_logistics($(this));
+      });
+      //结算量  发票数量的关系
+      $(document).on("blur",".volume_corresponding_logistics",function(){
+        var contract_logistics_code = $(this).parent().parent().parent().parent().parent().parent().find(".btn_code").attr("contract_code");
+        console.log(contract_logistics_code);
+        get_sale_object_list(settlement_bill_logistics_list, contract_logistics_code).volume_corresponding_change_logistics($(this));
+      });
+      //添加物流对账单数据
+      $(document).on("click", "#settlement_bill_logistics_add_data_btn", function() {
+        var contract_logistics_code = $(this).attr("contract_code");
+        get_sale_object_list(settlement_bill_logistics_list, contract_logistics_code).settlement_bill_logistics_add_data_func($(this));
+      });
+      //修改物流对账单模态框
+      $(document).on("click", ".settlement_bill_logistics_modle_pencil", function() {
+        var contract_logistics_code = $(this).attr("contract_code");
+        get_sale_object_list(settlement_bill_logistics_list, contract_logistics_code).settlement_bill_logistics_edit_modle_func($(this));
+      });
+      //修改物流对账单数据
+      $(document).on("click", "#settlement_bill_logistics_edit_data_btn", function() {
+        var contract_logistics_code = $(this).attr("contract_code");
+        get_sale_object_list(settlement_bill_logistics_list, contract_logistics_code).settlement_bill_logistics_edit_data_func($(this));
+      });
+      //删除物流对账单模态框
+      $(document).on("click", ".settlement_bill_logistics_modle_remove", function() {
+        var contract_logistics_code = $(this).attr("contract_code");
+        get_sale_object_list(settlement_bill_logistics_list, contract_logistics_code).settlement_bill_logistics_delete_modle_func($(this));
+      });
+      //删除物流对账单数据
+      $(document).on("click", "#settlement_bill_logistics_delete_modle_prop_btn", function() {
+        var contract_logistics_code = $(this).attr("contract_code");
+        get_sale_object_list(settlement_bill_logistics_list, contract_logistics_code).settlement_bill_logistics_delete_data_func($(this));
+      });
+      //详情
+      $(document).on("click", ".settlement_bill_logistics_modle_info", function() {
+        var contract_logistics_code = $(this).attr("contract_code");
+        get_sale_object_list(settlement_bill_logistics_list, contract_logistics_code).settlement_bill_logistics_info_modle_func($(this));
+      });
+      // 添加收付款记录模态框/////////////////////////////////////
+      $(document).on("click", "#paid_record_add_modle", function() {
+        var trade_contract_code = $(this).attr("trade_contract_code");
+        get_sale_object_list(paid_record_list, trade_contract_code).paid_record_add_modle_func();
+      });
+      // 添加收付款数据
+      $(document).on("click", "#paid_record_add_modle_prop_btn", function() {
+        var contract_code = $(this).data("contract_code");
+        get_sale_object_list(paid_record_list, contract_code).paid_record_add_data_func();
+      });
+      // 修改收付款记录模态框
+      $(document).on("click", ".paid_record_modle_pencil", function() {
+        var uuid = $(this).attr("uuid");
+        var trade_contract_code = $(this).attr("contract_code");
+        get_sale_object_list(paid_record_list, trade_contract_code).paid_record_get_record(uuid);
+        get_sale_object_list(paid_record_list, trade_contract_code).paid_record_edit_modal(uuid);
+      });
+      // 修改收付款数据
+      $(document).on("click", "#paid_record_edit_modal .edit_btn", function() {
+        var uuid = $(this).attr("uuid");
+        var contract_code = $(this).attr("contract_code");
+        get_sale_object_list(paid_record_list, contract_code).paid_record_edit_data(uuid);
+      });
+      // 收付款记录详情模态框
+      $(document).on("click", ".paid_record_modle_info", function() {
+        var uuid = $(this).attr("uuid");
+        var contract_code = $(this).attr("contract_code");
+        get_sale_object_list(paid_record_list, contract_code).paid_record_get_record(uuid);
+        get_sale_object_list(paid_record_list, contract_code).paid_record_detail_modal();
+      });
+      // 删除收付款记录模态框
+      $(document).on("click", ".paid_record_modle_remove", function() {
+        var uuid = $(this).attr("uuid");
+        var contract_code = $(this).attr("contract_code");
+        get_sale_object_list(paid_record_list, contract_code).paid_record_delete_modal(uuid);
+      });
+      // 删除收付款数据
+      $(document).on("click", "#paid_record_delete_modal .remove", function() {
+        var uuid = $(this).attr("uuid");
+        var contract_code = $(this).attr("contract_code");
+        get_sale_object_list(paid_record_list, contract_code).paid_record_delete_data(uuid);
+      });
+      // 提货委托函
+      // 添加提货委托函模态框
+      $(document).on("click", "#deliver_entrust_letter_add_modal_btn", function() {
+        var contract_code = $(this).attr("trade_contract_code");
+        get_sale_object_list(deliver_entrust_letter_list, contract_code).deliver_entrust_letter_add_modal();
+      });
+      // 添加提货委托函
+      $(document).on("click", "#deliver_entrust_letter_add_modal .add_btn", function() {
+        var contract_code = $(this).data("contract_code");
+        get_sale_object_list(deliver_entrust_letter_list, contract_code).deliver_entrust_letter_add_data();
+      });
+      // 修改提货委托函模态框
+      $(document).on("click", ".deliver_entrust_letter_edit", function() {
+        var uuid = $(this).data("uuid");
+        var contract_code = $(this).data("contract_code");
+        get_sale_object_list(deliver_entrust_letter_list, contract_code).deliver_entrust_letter_get_letter(uuid);
+        get_sale_object_list(deliver_entrust_letter_list, contract_code).deliver_entrust_letter_edit_modal(uuid);
+      });
+      // 修改提货委托函
+      $(document).on("click", "#deliver_entrust_letter_edit_modal .edit_btn", function() {
+        var uuid = $(this).data("uuid");
+        var contract_code = $(this).data("contract_code");
+        get_sale_object_list(deliver_entrust_letter_list, contract_code).deliver_entrust_letter_edit_data(uuid);
+      });
+      // 提货委托函详情模态框
+      $(document).on("click", ".deliver_entrust_letter_detail", function() {
+        var uuid = $(this).data("uuid");
+        var contract_code = $(this).data("contract_code");
+        get_sale_object_list(deliver_entrust_letter_list, contract_code).deliver_entrust_letter_get_letter(uuid)
+        get_sale_object_list(deliver_entrust_letter_list, contract_code).deliver_entrust_letter_detail_modal();
+      });
+      // 删除提货委托函模态框
+      $(document).on("click", ".deliver_entrust_letter_delete", function() {
+        var uuid = $(this).data("uuid");
+        var contract_code = $(this).data("contract_code");
+        get_sale_object_list(deliver_entrust_letter_list, contract_code).deliver_entrust_letter_delete_modal(uuid);
+      });
+      // 删除提货委托函
+      $(document).on("click", "#deliver_entrust_letter_delete_modal .remove", function() {
+        var uuid = $(this).data("uuid");
+        var contract_code = $(this).data("contract_code");
+        get_sale_object_list(deliver_entrust_letter_list, contract_code).deliver_entrust_letter_delete_data(uuid);
+      });
+      //货物确认函
+      // 添加货物确认函模态框
+      $(document).on("click", "#goods_confirm_letter_add_modal_btn", function() {
+        var contract_code = $(this).attr("contract_code");
+        get_sale_object_list(goods_confirm_letter_list, contract_code).goods_confirm_letter_add_modal();
+      });
+      // 添加货物确认函
+      $(document).on("click", "#goods_confirm_letter_add_modal .add_btn", function() {
+        var contract_code = $(this).data("contract_code");
+        get_sale_object_list(goods_confirm_letter_list, contract_code).goods_confirm_letter_add_data();
+      });
+      // 修改货物确认函模态框
+      $(document).on("click", ".goods_confirm_letter_edit", function() {
+        var uuid = $(this).data("uuid");
+        var contract_code = $(this).data("contract_code");
+        get_sale_object_list(goods_confirm_letter_list, contract_code).goods_confirm_letter_get_letter(uuid);
+        get_sale_object_list(goods_confirm_letter_list, contract_code).goods_confirm_letter_edit_modal(uuid);
+      });
+      // 修改货物确认函
+      $(document).on("click", "#goods_confirm_letter_edit_modal .edit_btn", function() {
+        var uuid = $(this).data("uuid");
+        var contract_code = $(this).data("contract_code");
+        get_sale_object_list(goods_confirm_letter_list, contract_code).goods_confirm_letter_edit_data(uuid);
+      });
+      // 货物确认函详情模态框
+      $(document).on("click", ".goods_confirm_letter_detail", function() {
+        var uuid = $(this).data("uuid");
+        var contract_code = $(this).data("contract_code");
+        get_sale_object_list(goods_confirm_letter_list, contract_code).goods_confirm_letter_get_letter(uuid)
+        get_sale_object_list(goods_confirm_letter_list, contract_code).goods_confirm_letter_detail_modal();
+      });
+      // 删除货物确认函模态框
+      $(document).on("click", ".goods_confirm_letter_delete", function() {
+        var uuid = $(this).data("uuid");
+        var contract_code = $(this).data("contract_code");
+        get_sale_object_list(goods_confirm_letter_list, contract_code).goods_confirm_letter_delete_modal(uuid);
+      });
+      // 删除货物确认函
+      $(document).on("click", "#goods_confirm_letter_delete_modal .remove", function() {
+        var uuid = $(this).data("uuid");
+        var contract_code = $(this).data("contract_code");
+        var contract_uuid = $("#goods_confirm_letter_add_modal_btn").attr("contract_uuid");
+        get_sale_object_list(goods_confirm_letter_list, contract_code).goods_confirm_letter_delete_data(uuid);
+      });
+      //出库单
+      // 添加出库单模态框
+      $(document).on("click", "#godown_exit_add_modal_btn", function() {
+        var vehicle_information_uuid = $(this).attr("vehicle_information_uuid");
+        get_vehicle_object_list(godown_exit_list, vehicle_information_uuid).godown_exit_add_modal();
+      });
+      // 添加出库单
+      $(document).on("click", "#godown_exit_add_modal .add_btn", function() {
+        var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
+        get_vehicle_object_list(godown_exit_list, vehicle_information_uuid).godown_exit_add_data();
+      });
+      // 修改出库单模态框
+      $(document).on("click", ".godown_exit_edit", function() {
+        var uuid = $(this).data("uuid");
+        var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
+        get_vehicle_object_list(godown_exit_list, vehicle_information_uuid).godown_exit_get_letter(uuid);
+        get_vehicle_object_list(godown_exit_list, vehicle_information_uuid).godown_exit_edit_modal(uuid);
+      });
+      // 修改出库单
+      $(document).on("click", "#godown_exit_edit_modal .edit_btn", function() {
+        var uuid = $(this).data("uuid");
+        var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
+        get_vehicle_object_list(godown_exit_list, vehicle_information_uuid).godown_exit_edit_data(uuid);
+      });
+      // 出库单详情模态框
+      $(document).on("click", ".godown_exit_detail", function() {
+        var uuid = $(this).data("uuid");
+        var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
+        get_vehicle_object_list(godown_exit_list, vehicle_information_uuid).godown_exit_get_letter(uuid)
+        get_vehicle_object_list(godown_exit_list, vehicle_information_uuid).godown_exit_detail_modal();
+      });
+      // 删除出库单模态框
+      $(document).on("click", ".godown_exit_delete", function() {
+        var uuid = $(this).data("uuid");
+        var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
+        get_vehicle_object_list(godown_exit_list, vehicle_information_uuid).godown_exit_delete_modal(uuid);
+      });
+      // 删除出库单
+      $(document).on("click", "#godown_exit_delete_modal .remove", function() {
+        var uuid = $(this).data("uuid");
+        var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
+        get_vehicle_object_list(godown_exit_list, vehicle_information_uuid).godown_exit_delete_data(uuid);
+      });
+      //入库单
+      // 添加入库单模态框
+      $(document).on("click", "#godown_entry_add_modal_btn", function() {
+        var vehicle_information_uuid = $(this).attr("vehicle_information_uuid");
+        get_vehicle_object_list(godown_entry_list, vehicle_information_uuid).godown_entry_add_modal();
+      });
+      // 添加入库单
+      $(document).on("click", "#godown_entry_add_modal .add_btn", function() {
+        var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
+        get_vehicle_object_list(godown_entry_list, vehicle_information_uuid).godown_entry_add_data();
+      });
+      // 修改入库单模态框
+      $(document).on("click", ".godown_entry_edit", function() {
+        var uuid = $(this).data("uuid");
+        var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
+        get_vehicle_object_list(godown_entry_list, vehicle_information_uuid).godown_entry_get_letter(uuid);
+        get_vehicle_object_list(godown_entry_list, vehicle_information_uuid).godown_entry_edit_modal(uuid);
+      });
+      // 修改入库单
+      $(document).on("click", "#godown_entry_edit_modal .edit_btn", function() {
+        var uuid = $(this).data("uuid");
+        var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
+        get_vehicle_object_list(godown_entry_list, vehicle_information_uuid).godown_entry_edit_data(uuid);
+      });
+      // 入库单详情模态框
+      $(document).on("click", ".godown_entry_detail", function() {
+        var uuid = $(this).data("uuid");
+        var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
+        get_vehicle_object_list(godown_entry_list, vehicle_information_uuid).godown_entry_get_letter(uuid)
+        get_vehicle_object_list(godown_entry_list, vehicle_information_uuid).godown_entry_detail_modal();
+      });
+      // 删除入库单模态框
+      $(document).on("click", ".godown_entry_delete", function() {
+        var uuid = $(this).data("uuid");
+        var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
+        get_vehicle_object_list(godown_entry_list, vehicle_information_uuid).godown_entry_delete_modal(uuid);
+      });
+      // 删除入库单
+      $(document).on("click", "#godown_entry_delete_modal .remove", function() {
+        var uuid = $(this).data("uuid");
+        var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
+        get_vehicle_object_list(godown_entry_list, vehicle_information_uuid).godown_entry_delete_data(uuid);
+      });
+      //化验单
+      // 添加化验单模态框
+      $(document).on("click", "#report_test_add_modal_btn", function() {
+        var vehicle_information_uuid = $(this).attr("vehicle_information_uuid");
+        get_vehicle_object_list(report_test_list, vehicle_information_uuid).report_test_add_modal();
+      });
+      // 添加化验单
+      $(document).on("click", "#report_test_add_modal .add_btn", function() {
+        var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
+        get_vehicle_object_list(report_test_list, vehicle_information_uuid).report_test_add_data();
+      });
+      // 修改化验单模态框
+      $(document).on("click", ".report_test_edit", function() {
+        var uuid = $(this).data("uuid");
+        var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
+        get_vehicle_object_list(report_test_list, vehicle_information_uuid).report_test_get_letter(uuid);
+        get_vehicle_object_list(report_test_list, vehicle_information_uuid).report_test_edit_modal(uuid);
+      });
+      // 修改化验单
+      $(document).on("click", "#report_test_edit_modal .edit_btn", function() {
+        var uuid = $(this).data("uuid");
+        var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
+        get_vehicle_object_list(report_test_list, vehicle_information_uuid).report_test_edit_data(uuid);
+      });
+      // 化验单详情模态框
+      $(document).on("click", ".report_test_detail", function() {
+        var uuid = $(this).data("uuid");
+        var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
+        get_vehicle_object_list(report_test_list, vehicle_information_uuid).report_test_get_letter(uuid)
+        get_vehicle_object_list(report_test_list, vehicle_information_uuid).report_test_detail_modal();
+      });
+      // 删除化验单模态框
+      $(document).on("click", ".report_test_delete", function() {
+        var uuid = $(this).data("uuid");
+        var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
+        get_vehicle_object_list(report_test_list, vehicle_information_uuid).report_test_delete_modal(uuid);
+      });
+      // 删除化验单
+      $(document).on("click", "#report_test_delete_modal .remove", function() {
+        var uuid = $(this).data("uuid");
+        var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
+        get_vehicle_object_list(report_test_list, vehicle_information_uuid).report_test_delete_data(uuid);
+      });
+      // 商检单
+      // 添加商检单模态框
+      $(document).on("click", "#report_shore_tank_add_modle_btn", function() {
+        var vehicle_information_uuid = $(this).attr("vehicle_information_uuid");
+        get_vehicle_object_list(report_shore_tank_list, vehicle_information_uuid).report_shore_tank_add_modal();
+      });
+      // 添加商检单
+      $(document).on("click", "#report_shore_tank_add_modal .add_btn", function() {
+        var vehicle_information_uuid = $(this).attr("vehicle_information_uuid");
+        get_vehicle_object_list(report_shore_tank_list, vehicle_information_uuid).report_shore_tank_add_data();
+      });
+      // 修改商检单模态框
+      $(document).on("click", ".report_shore_tank_edit", function() {
+        var uuid = $(this).data("uuid");
+        var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
+        get_vehicle_object_list(report_shore_tank_list, vehicle_information_uuid).report_shore_tank_get_letter(uuid);
+        get_vehicle_object_list(report_shore_tank_list, vehicle_information_uuid).report_shore_tank_edit_modal(uuid);
+      });
+      // 修改商检单
+      $(document).on("click", "#report_shore_tank_edit_modal .edit_btn", function() {
+        var uuid = $(this).data("uuid");
+        var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
+        get_vehicle_object_list(report_shore_tank_list, vehicle_information_uuid).report_shore_tank_edit_data(uuid);
+      });
+      // 商检单详情模态框
+      $(document).on("click", ".report_shore_tank_detail", function() {
+        var uuid = $(this).data("uuid");
+        var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
+        get_vehicle_object_list(report_shore_tank_list, vehicle_information_uuid).report_shore_tank_get_letter(uuid)
+        get_vehicle_object_list(report_shore_tank_list, vehicle_information_uuid).report_shore_tank_detail_modal();
+      });
+      // 删除商检单模态框
+      $(document).on("click", ".report_shore_tank_delete", function() {
+        var uuid = $(this).data("uuid");
+        var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
+        get_vehicle_object_list(report_shore_tank_list, vehicle_information_uuid).report_shore_tank_delete_modal(uuid, vehicle_information_uuid);
+      });
+      // 删除商检单
+      $(document).on("click", "#report_shore_tank_delete_modal .remove", function() {
+        var uuid = $(this).data("uuid");
+        var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
+        get_vehicle_object_list(report_shore_tank_list, vehicle_information_uuid).report_shore_tank_delete_data(uuid, vehicle_information_uuid);
+      });
+    });
+  </script>
+</head>
+<body>
+  <div id = "contract_sale_content"></div>
+</body>
+</html>

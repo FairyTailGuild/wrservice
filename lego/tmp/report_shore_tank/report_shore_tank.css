@@ -1,0 +1,11 @@
+/**
+ * @author yangyongxia
+ */
+
+@charset "utf-8";
+.report_shore_tank_mt20{margin-top: 20px;}
+.report_shore_tank_ml15{margin-left: 15px;}
+.report_shore_tanks_none{display: none;}
+.report_shore_tanks_center{text-align: center;}
+#ui-datepicker-div{z-index: 1000000!important;}
+#report_shore_tank_list p{text-align: center;}

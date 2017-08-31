@@ -1,0 +1,10 @@
+/**
+ * @author wangdi
+ */
+
+@charset "utf-8";
+.settlement_bill_buy_mt20{margin-top: 20px;}
+.settlement_bill_buy_ml15{margin-left: 15px;}
+.settlement_bill_buy_none{display: none;}
+.settlement_bill_buy_center{text-align: center;}
+.table {margin-bottom: 0px;}

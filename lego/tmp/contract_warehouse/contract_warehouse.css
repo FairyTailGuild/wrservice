@@ -1,0 +1,11 @@
+/**
+ * @author wangdi
+ */
+
+@charset "utf-8";
+.contract_warehouse_mt20{margin-top: 20px;}
+.contract_warehouse_ml15{margin-left: 15px;}
+#contract_warehouse_pages .pagination{padding-bottom: 20px;}
+.contract_warehouse_center{text-align: center;}
+.table {margin-bottom: 0px;}
+#contract_warehouse_pages .pagination{margin-bottom: 0;}

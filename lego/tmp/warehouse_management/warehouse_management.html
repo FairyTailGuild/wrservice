@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv = "Content-Type" content = "text/html; charset=utf-8">
+  <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
+  <meta name = "viewport" content = "width=device-width, initial-scale=1">
+  <link rel = "stylesheet" href = "../../plugin/bootstrap/3.3.7/css/bootstrap.css">
+  <link rel = "stylesheet" href = "../../css/custom_modal.css">
+  <link rel = "stylesheet" href = "warehouse_management.css">
+  <script src = "../../plugin/jquery/1.12.4/jquery.min.js"></script>
+  <script src = "../../plugin/bootstrap/3.3.7/js/bootstrap.js"></script>
+  <script src = "../../js/toolkit.js"></script>
+  <script src = "../../js/configure.js"></script>
+  <script src = "warehouse_management.js"></script>
+  <script>
+    $(document).ready(function() {      
+      warehouse_management_output("#warehouse_management_area");
+      //清空原始数据
+      warehouse_management_clear_raw_data();
+      //服务器数据
+      warehouse_management_server_data_cover();
+      //加载数据
+      warehouse_management_fill_variable_data();
+      //添加仓库模态框
+      $("#warehouse_management_plus").click(function() {
+        warehouse_management_add_warehouse_modal();
+      });
+      //添加仓库数据
+      $(document).on("click", ".warehouse_management_prop_data", function() {
+        var warehouse_management_prop_data_this = $(this);
+        warehouse_management_add_warehouse_data( warehouse_management_prop_data_this );
+      });
+      //修改仓库模态框
+      $(document).on("click", ".warehouse_management_edit_pencil", function() {
+        var warehouse_management_pencil_data_this = $(this);
+        warehouse_management_edit_warehouse_modal( warehouse_management_pencil_data_this );
+      });
+      //修改仓库保存数据
+      $(document).on("click", ".warehouse_management_prop_edit_data", function() {
+        var warehouse_management_remove_data_this = $(this);
+        warehouse_management_edit_warehouse_data( warehouse_management_remove_data_this );
+      });
+      //删除仓库模态框
+      $(document).on("click", ".warehouse_management_remove", function() {
+        var warehouse_management_remove_this = $(this);
+        warehouse_management_delet_warehouse_modal( warehouse_management_remove_this );
+      });
+      //删除仓库数据
+      $(document).on("click", ".warehouse_management_delet_data", function() {
+        var warehouse_management_delete_this = $(this);
+        warehouse_management_delete_warehouse_data( warehouse_management_delete_this );
+      });
+      //添加储罐模态框
+      $(document).on("click", ".warehouse_management_add_tank", function() {
+        var warehouse_management_add_tank_this = $(this);
+        warehouse_management_add_warehouse_pot_modal( warehouse_management_add_tank_this );
+      });
+      // 添加储罐数据
+      $(document).on("click", ".warehouse_management_add_tank_data", function() {
+        var warehouse_management_add_tank_this = $(this);
+        warehouse_management_add_warehouse_pot_data( warehouse_management_add_tank_this );
+      });
+      //修改储罐模态框
+      $(document).on("click", ".warehouse_management_tank_pencil", function() {
+        var warehouse_management_tank_pencil_this = $(this);
+        var warehouse_uuid = $(this).parent().parent().prev().attr("warehouse_uuid");
+        warehouse_management_edit_warehouse_pot_modal( warehouse_management_tank_pencil_this, warehouse_uuid);
+      });
+      //储罐修改保存数据
+      $(document).on("click", ".warehouse_management_tank_pencil_data", function() {
+        var warehouse_tank_pencil_this = $(this);
+        warehouse_management_edit_warehouse_pot_data( warehouse_tank_pencil_this );
+      });
+      //删除储罐模态框
+      $(document).on("click", ".warehouse_management_tank_remove", function() {
+        var warehouse_tank_remove_this = $(this);
+        warehouse_management_delete_warehouse_pot_modal( warehouse_tank_remove_this );
+      });
+      //删除储罐数据
+      $(document).on("click", ".warehouse_management_tank_remove_data", function() {
+        var warehouse_tank_remove_data_this = $(this);
+        warehouse_management_delete_warehouse_pot_data( warehouse_tank_remove_data_this );
+      });
+    });
+  </script>
+</head>
+<body>
+  <div id = "warehouse_management_area"></div>
+</body>
+</html>

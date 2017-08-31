@@ -1,0 +1,23 @@
+/**
+ * @author yangyongxia
+ */
+.warehouse_payment_detail_mt15{
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+#warehouse_payment_detail_search{
+  width: 83px;
+  height: 83px;
+}
+.warehouse_payment_detail_pb0{
+  padding: 0 0 1px 0;
+}
+#warehouse_payment_detail_content table{
+  margin-bottom: 0;
+}
+#warehouse_payment_detail_list tbody td{
+  text-align: center;
+}
+#warehouse_payment_detail_list thead th{
+  text-align: center;
+}

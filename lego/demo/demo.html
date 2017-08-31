@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset = "utf-8">
+    <title>Demo</title>
+    <link rel = "stylesheet" href = "../../plugin/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel = "stylesheet" href = "../../plugin/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <link rel = "stylesheet" href = "demo.css">
+    <script src = "../../plugin/jquery/1.12.4/jquery.min.js"></script>
+    <script src = "../../plugin/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src = "../../plugin/less/2.7.1/less.min.js"></script>
+    <script src = "../../plugin/chart/2.6.0/Chart.bundle.min.js"></script>
+    <script src = "../../js/toolkit.js"></script>
+    <script src = "demo.js"></script>
+    <script>
+    $(document).ready(function() {
+    var config = {
+        type: 'line',
+        data: {
+            labels: ["2017年1月", "2017年2月", "2017年3月", "2017年4月", "2017年5月", "2017年6月", "2017年7月"],
+            datasets: [{
+                label: "故障保修曲线图",
+                backgroundColor: "rgb(255, 99, 132)",
+                borderColor: "#3d6bd8",
+                fill: false,
+                data: [22, 7, 9, 12, 34, 19, 31],
+            }]
+        },
+        options: {
+            responsive: true,
+            title:{
+                display:false,
+                text:'Chart.js Line Chart - Logarithmic'
+            },
+            scales: {
+                xAxes: [{
+                    display: true
+                }],
+                yAxes: [{
+                    display: true
+                }]
+            }
+        }
+    };
+    var ctx = document.getElementById("myChart").getContext("2d");
+    window.myLine = new Chart(ctx, config);
+    // Get context with jQuery - using jQuery's .get() method.
+    // var ctx = $("#myChart").get(0).getContext("2d");
+    //This will get the first returned node in the jQuery collection.
+    // var myNewChart = new Chart(ctx).Line(data, null);
+    });
+    </script>
+  </head>
+  <body>
+    <canvas id = "myChart" width = "969" height = "362"></canvas>
+  </body>
+</html>

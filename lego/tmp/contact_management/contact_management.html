@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv = "Content-Type" content = "text/html; charset=utf-8">
+  <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
+  <meta name = "viewport" content = "width=device-width, initial-scale=1">
+  <link rel = "stylesheet" href = "../../plugin/bootstrap/3.3.7/css/bootstrap.css"/>
+  <link rel = "stylesheet" href = "../../plugin/jquery_ui/1.12.1/jquery-ui.min.css">
+  <link rel = "stylesheet" href = "contact_management.css"/>
+  <link rel = "stylesheet" href = "../../css/custom_modal.css"/>
+  <script src = "../../plugin/jquery/1.12.4/jquery.min.js" type = "text/javascript" charset = "utf-8"></script>
+  <script src = "../../plugin/bootstrap/3.3.7/js/bootstrap.js" type = "text/javascript" charset = "utf-8"></script>
+  <script src = "../../js/configure.js" type = "text/javascript" charset = "utf-8"></script>
+  <script src = "../../js/toolkit.js" type = "text/javascript" charset = "utf-8"></script>
+  <script src="../check_login/check_login.js" type="text/javascript" charset="utf-8"></script>
+  <script src = "contact_management.js" type = "text/javascript" charset = "utf-8"></script>
+  <script type = "text/javascript">
+  $(document).ready(function() {
+    contact_management_output("#contact_management_content");
+    // 初始化
+    contact_management_clear_raw_data();
+    // 服务器数据
+    contact_management_server_enterprise_data_cover();
+    //contact_management_server_data_cover();
+    // 赋值
+    contact_management_fill_variable_enterprise_data();
+    //contact_management_fill_variable_data();
+    // 分页
+    $(document).on("click", "#contact_management_pages li", function() {
+      var contact_management_pages = $(this);
+      contact_management_pages_fun(contact_management_pages);
+    });
+    // 点击企业搜索
+    $(document).on("click", "#contact_management_enterprise_search_btn", function() {
+      contact_management_search_enterprise_name();
+    });
+    // 点击联系人姓名搜索
+    $(document).on("click", "#contact_management_contact_name_search", function() {
+      contact_management_search_contact_name();
+    });
+    // 添加联系人
+    $(document).on("click", "#contact_management_add_contact", function(){
+      contact_management_add_contact();
+    });
+    // 删除模态框
+    $(document).on("click", ".contact_management_delete", function(){
+      var uuid = $(this).data("uuid");
+      contact_management_delete_contact(uuid);
+    });
+    // 删除
+    $(document).on("click", "#contact_management_delete_modal .remove", function(){
+      var uuid = $(this).data("uuid");
+      contact_management_delete_data(uuid);
+    });
+    
+  }); 
+  </script>
+  <title></title>
+</head>
+<body>
+  <div class = "row" id = "contact_management_content"></div>
+</body>
+</html>

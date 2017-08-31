@@ -1,0 +1,153 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv = "Content-Type" content = "text/html; charset=utf-8">
+  <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
+  <meta name = "viewport" content = "width=device-width, initial-scale=1">
+  <link rel = "stylesheet" href = "../../plugin/bootstrap/3.3.7/css/bootstrap.css">
+  <link rel = "stylesheet" href = "../../plugin/jquery_ui/1.12.1/jquery-ui.min.css">
+  <link rel = "stylesheet" href = "../../plugin/jquery_timepicker_addon/1.6.3/jquery-ui-timepicker-addon.css" />
+  <link rel = "stylesheet" href="../../plugin/icheck/1.x/skins/all.css" type = "text/css"/>
+  <link rel = "stylesheet" href = "../../css/custom_modal.css">
+  <link rel = "stylesheet" href = "../upload_attachment/upload_attachment.css"/>
+  <link rel = "stylesheet" href = "contract_logistics.css">
+  <script src = "../../plugin/jquery/1.12.4/jquery.min.js"></script>    
+  <script src = "../../plugin/jquery_ui/1.12.1/jquery-ui.min.js"></script>
+  <script src = "../../plugin/bootstrap/3.3.7/js/bootstrap.js"></script>
+  <script src = "../../plugin/jquery_timepicker_addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
+  <script src = "../../plugin/icheck/1.x/icheck.js" type = "text/javascript" charset="utf-8"></script>
+  <script src = "../../plugin/jquery_timepicker_addon/1.6.3/init.js"></script>
+  <script src = "../../js/toolkit.js"></script>
+  <script src = "../../js/configure.js"></script>
+  <script src = "../upload_attachment/upload_attachment.js" type = "text/javascript" charset = "utf-8"></script>
+  <script src = "contract_logistics.js"></script>
+  <script>
+    $(document).ready(function() {
+      contract_logistics_output("#contract_logistics_content");
+      //日历插件
+      widget_datepicker_init();
+      //清空原始数据
+      contract_logistics_clear_raw_data();
+      //服务器数据
+      contract_logistics_server_data_cover();
+      //加载数据
+      contract_logistics_fill_variable_data();     
+      //添加物流合同模态框
+      $(document).on("click", "#contract_logistics_add_modle", function() {
+        contract_logistics_add_modle_func($(this));
+      });
+      //添加物流合同数据
+      $(document).on("click", "#contract_logistics_add_data_btn", function() {
+        contract_logistics_add_data_func($(this));
+      });
+      //修改物流合同模态框
+      $(document).on("click", ".contract_logistics_modle_pencil", function() {
+        contract_logistics_edit_modle_func($(this));
+      });
+      //修改物流合同数据
+      $(document).on("click", "#contract_logistics_edit_data_btn", function() {
+        contract_logistics_edit_data_func($(this));
+      });
+      //删除物流合同模态框
+      $(document).on("click", ".contract_logistics_modle_remove", function() {
+        contract_logistics_delete_modle_func($(this));
+      });
+      //删除物流合同数据
+      $(document).on("click", "#contract_logistics_delete_modle_prop_btn", function() {
+        contract_logistics_delete_data_func($(this));
+      });
+      //详情
+      $(document).on("click", ".contract_logistics_modle_info", function() {
+        contract_logistics_info_modle_func($(this));
+      });
+      //合同展开详情按钮
+      $(document).on("click", ".contract_logistics_open_btn", function() {
+        contract_logistics_open_info_func($(this));
+      });
+    });
+  </script>
+</head>
+<body>
+  <div id = "contract_logistics_content"></div>
+  <!--id ="contract_logistics_"+trade_contract_code-->
+  <!--<div class = "panel panel-primary ">
+    <div class = "panel-heading clearfix">物流合同<span class = "glyphicon glyphicon-plus pull-right" id = "contract_logistics_add_modle"></span></div>
+    <div class = "panel-body">
+        <div class = "row">
+          <div class = "col-lg-12">
+            <table cellpadding = "0" cellspacing = "0" border = "0" width = "100%" class = "table">
+              <thead>
+                <tr>
+                  <th>展开详情</th>
+                  <th>使用企业</th>
+                  <th>物流企业</th>
+                  <th>物流载体</th>
+                  <th>货品</th>
+                  <th>装货地点</th>
+                  <th>卸货地点</th>
+                  <th>合同损耗（‰）</th>
+                  <th>运费（元）</th>
+                  <th>运量（吨）</th>
+                  <th>&nbsp;</th>
+                </tr>
+              </thead>
+              <tbody class = "contract_logistics_box">
+                <tr>
+                  <td><button type = "button" class = "btn btn-info btn-xs"><span class = "glyphicon glyphicon-chevron-up"></span></button></td>
+                  <td>福记</td>
+                  <td>细语</td>
+                  <td>加技术</td>
+                  <td>METB</td>
+                  <td>舟山</td>
+                  <td>上海</td>
+                  <td>2</td>
+                  <td>3600</td>
+                  <td>3600</td>
+                  <td>
+                    <span class = "glyphicon glyphicon-info-sign contract_logistics_ml15"></span>
+                    <span class = "glyphicon glyphicon-pencil contract_logistics_ml15"></span>
+                    <span class = "glyphicon glyphicon-remove contract_logistics_ml15"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><button type = "button" class = "btn btn-info btn-xs"><span class = "glyphicon glyphicon-chevron-up"></span></button></td>
+                  <td>福记</td>
+                  <td>细语</td>
+                  <td>加技术</td>
+                  <td>METB</td>
+                  <td>舟山</td>
+                  <td>上海</td>
+                  <td>2</td>
+                  <td>3600</td>
+                  <td>3600</td>
+                  <td>
+                    <span class = "glyphicon glyphicon-info-sign contract_logistics_ml15"></span>
+                    <span class = "glyphicon glyphicon-pencil contract_logistics_ml15"></span>
+                    <span class = "glyphicon glyphicon-remove contract_logistics_ml15"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><button type = "button" class = "btn btn-info btn-xs"><span class = "glyphicon glyphicon-chevron-up"></span></button></td>
+                  <td>福记</td>
+                  <td>细语</td>
+                  <td>加技术</td>
+                  <td>METB</td>
+                  <td>舟山</td>
+                  <td>上海</td>
+                  <td>2</td>
+                  <td>3600</td>
+                  <td>3600</td>
+                  <td>
+                    <span class = "glyphicon glyphicon-info-sign contract_logistics_ml15"></span>
+                    <span class = "glyphicon glyphicon-pencil contract_logistics_ml15"></span>
+                    <span class = "glyphicon glyphicon-remove contract_logistics_ml15"></span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>-->
+</body>
+</html>

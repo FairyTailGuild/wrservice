@@ -1,0 +1,129 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv = "Content-Type" content = "text/html; charset=utf-8">
+  <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
+  <meta name = "viewport" content = "width=device-width, initial-scale=1">
+  <link rel = "stylesheet" href = "../../plugin/bootstrap/3.3.7/css/bootstrap.css">
+  <link rel = "stylesheet" href = "../../css/custom_modal.css">
+  <link rel = "stylesheet" href = "vehicle_information.css">
+  <script src = "../../plugin/jquery/1.12.4/jquery.min.js"></script>  
+  <script src = "../../plugin/bootstrap/3.3.7/js/bootstrap.js"></script>
+  <script src = "../../js/toolkit.js"></script>
+  <script src = "../../js/configure.js"></script>
+  <script src = "vehicle_information.js"></script>
+  <script>
+    $(document).ready(function() {
+//    vehicle_information_output("#vehicle_information_content");
+      //清空原始数据
+      vehicle_information_clear_raw_data();
+      //服务器数据
+      vehicle_information_server_data_cover();
+      //加载数据
+      vehicle_information_fill_variable_data();
+      //添加车船信息模态框
+      $(document).on("click", "#vehicle_information_add_modle", function() {
+        vehicle_information_add_modle_func($(this));
+      });
+      //添加车船信息数据
+      $(document).on("click", "#vehicle_information_add_data_btn", function() {
+        vehicle_information_add_data_func($(this));
+      });
+      //修改车船信息模态框
+      $(document).on("click", ".vehicle_information_modle_pencil", function() {
+        vehicle_information_edit_modle_func($(this));
+      });
+      //修改车船信息数据
+      $(document).on("click", "#vehicle_information_edit_data_btn", function() {
+        vehicle_information_edit_data_func($(this));
+      });
+      //删除车船信息模态框
+      $(document).on("click", ".vehicle_information_modle_remove", function() {
+        vehicle_information_delete_modle_func($(this));
+      });
+      //删除车船信息数据
+      $(document).on("click", "#vehicle_information_delete_modle_prop_btn", function() {
+        vehicle_information_delete_data_func($(this));
+      });
+      //详情
+      $(document).on("click", ".vehicle_information_modle_info", function() {
+        vehicle_information_info_modle_func($(this));
+      });
+      //合同展开详情按钮
+      $(document).on("click", ".vehicle_information_open_btn", function() {
+        vehicle_information_open_info_func($(this));
+      });
+    });
+  </script>
+</head>
+<body>
+  <div id = "vehicle_information_content"></div>
+  <div class = "panel panel-primary ">
+    <div class = "panel-heading clearfix">车船信息<span class = "glyphicon glyphicon-plus pull-right" id = "vehicle_information_add_modle" contract_code = "ZS-TZGYL-17813261" warehouse_uuid = "17c2655b819541978281eb40b4d969e4"></span></div>
+    <div class = "panel-body">
+        <div class = "row">
+          <div class = "col-lg-12">
+            <table cellpadding = "0" cellspacing = "0" border = "0" width = "100%" class = "table">
+              <thead>
+                <tr>
+                  <th>展开详情</th>
+                  <th>车船名</th>
+                  <th>核载量（吨）</th>
+                  <th>提货数量（吨）</th>
+                  <th>联系人</th>
+                  <th>联系方式</th>
+                  <th>身份证号码</th>
+                  <th>&nbsp;</th>
+                </tr>
+              </thead>
+              <tbody class = "vehicle_information_box">
+                <tr>
+                  <td><button type = "button" class = "btn btn-info btn-xs"><span class = "glyphicon glyphicon-chevron-up"></span></button></td>
+                  <td>鲁a11111</td>
+                  <td>300</td>
+                  <td>200</td>
+                  <td>张三</td>
+                  <td>15911111111</td>
+                  <td>3701245789654521547</td>
+                  <td>
+                    <span class = "glyphicon glyphicon-info-sign vehicle_information_ml15"></span>
+                    <span class = "glyphicon glyphicon-pencil vehicle_information_ml15"></span>
+                    <span class = "glyphicon glyphicon-remove vehicle_information_ml15"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><button type = "button" class = "btn btn-info btn-xs"><span class = "glyphicon glyphicon-chevron-up"></span></button></td>
+                  <td>鲁a11111</td>
+                  <td>300</td>
+                  <td>200</td>
+                  <td>张三</td>
+                  <td>15911111111</td>
+                  <td>3701245789654521547</td>
+                  <td>
+                    <span class = "glyphicon glyphicon-info-sign vehicle_information_ml15"></span>
+                    <span class = "glyphicon glyphicon-pencil vehicle_information_ml15"></span>
+                    <span class = "glyphicon glyphicon-remove vehicle_information_ml15"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><button type = "button" class = "btn btn-info btn-xs"><span class = "glyphicon glyphicon-chevron-up"></span></button></td>
+                  <td>鲁a11111</td>
+                  <td>300</td>
+                  <td>200</td>
+                  <td>张三</td>
+                  <td>15911111111</td>
+                  <td>3701245789654521547</td>
+                  <td>
+                    <span class = "glyphicon glyphicon-info-sign vehicle_information_ml15"></span>
+                    <span class = "glyphicon glyphicon-pencil vehicle_information_ml15"></span>
+                    <span class = "glyphicon glyphicon-remove vehicle_information_ml15"></span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+</html>

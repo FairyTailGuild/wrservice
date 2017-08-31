@@ -1,0 +1,11 @@
+/**
+ * @author yangyongxia
+ */
+
+@charset "utf-8";
+.report_boat_ullage_mt20{margin-top: 20px;}
+.report_boat_ullage_ml15{margin-left: 15px;}
+.report_boat_ullages_none{display: none;}
+.report_boat_ullages_center{text-align: center;}
+#ui-datepicker-div{z-index: 1000000!important;}
+#report_boat_ullage_list p{text-align: center;}

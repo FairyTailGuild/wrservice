@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset = "utf-8" />
+<link rel = "stylesheet" type = "text/css" href = "../../plugin/bootstrap/3.3.7/css/bootstrap.css"/>
+<link rel = "stylesheet" type = "text/css" href = "upload_attachment.css"/>
+<script src = "../../plugin/jquery/1.12.4/jquery.min.js" type = "text/javascript" charset = "utf-8"></script>
+<script src = "../../plugin/bootstrap/3.3.7/js/bootstrap.js" type = "text/javascript" charset = "utf-8"></script>
+<script src = "../../js/toolkit.js" type = "text/javascript" charset = "utf-8"></script>
+<script src = "../../js/configure.js" type = "text/javascript" charset = "utf-8"></script>
+<script src = "upload_attachment.js" type = "text/javascript" charset = "utf-8"></script>
+<script>
+  $(document).ready(function() {
+    // demo数据
+    var demo_data = [
+      {"file_name": "b52ea964eb994f0f87ed2484f996fde1.txt"},
+      {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+      {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+      {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+      {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+      {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+      {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+      {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"}
+    ];
+    // 添加编辑示例
+    upload_attachment_edit_output("#test_area", demo_data);
+    // 预览示例
+    // upload_attachment_preview_output("#test_area", demo_data);
+    // 获取数据示例
+    // var cluster_data = get_upload_attachment_data("#test_area");
+    // for (var i = 0; i < cluster_data.length; i++) {
+    //   console.log(cluster_data[i].cluster);
+    // }
+  });
+</script>
+<title>demo</title>
+</head>
+<body>
+  <div id = "test_area" style = "width: 600px"></div>
+</body>
+</html>

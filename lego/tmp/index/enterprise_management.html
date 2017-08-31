@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv = "Content-Type" content = "text/html; charset=utf-8">
+  <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
+  <meta name = "viewport" content = "width=device-width, initial-scale=1">
+  <link rel = "stylesheet" href = "../../plugin/bootstrap/3.3.7/css/bootstrap.css"/>
+  <link rel = "stylesheet" href = "../../plugin/jquery_ui/1.12.1/jquery-ui.min.css">
+  <link rel = "stylesheet" href = "../../plugin/jquery_timepicker_addon/1.6.3/jquery-ui-timepicker-addon.css" />
+  <link rel = "stylesheet" href = " ../../plugin/icheck/1.x/skins/all.css"/>
+  <link rel = "stylesheet" href = "../../css/custom_modal.css"/>
+  <link rel = "stylesheet" href = "../nav_menu/nav_menu.css">
+  <link rel = "stylesheet" href = "../header/header.css">
+  <link rel = "stylesheet" href = "../upload_attachment/upload_attachment.css"/>
+  <link rel = "stylesheet" href = "../enterprise_management/enterprise_management.css"/>
+  <script src = "../../plugin/jquery/1.12.4/jquery.min.js" type = "text/javascript" charset = "utf-8"></script>
+  <script src = "../../plugin/bootstrap/3.3.7/js/bootstrap.js" type = "text/javascript" charset = "utf-8"></script>
+  <script src = "../../plugin/jquery_ui/1.12.1/jquery-ui.min.js"></script>
+  <script src = "../../plugin/jquery_timepicker_addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>  
+  <script src = "../../plugin/jquery_timepicker_addon/1.6.3/init.js"></script>
+  <script src = "../../plugin/icheck/1.x/icheck.min.js" type = "text/javascript" charset = "utf-8"></script>
+  <script src = "../../js/configure.js" type = "text/javascript" charset="utf-8"></script>
+  <script src = "../../js/toolkit.js" type = "text/javascript" charset = "utf-8"></script>
+  <script src = "../nav_menu/nav_menu.js"></script>
+  <script src = "../header/header.js"></script>
+  <script src = "../upload_attachment/upload_attachment.js" type = "text/javascript" charset = "utf-8"></script>
+  <script src = "../enterprise_management/enterprise_management.js" type = "text/javascript" charset = "utf-8"></script>
+  <script src = "../check_login/check_login.js" type = "text/javascript" charset = "utf-8"></script>
+<script type = "text/javascript">
+$(document).ready(function() {
+  check_login();
+  header_output("#header");
+  $(document).on("click", "#header_edit_password_prop", function() {
+    header_edit_password_func();
+  });
+  //保存密码
+  $(document).on("click", "#header_edit_password_btn", function() {
+    header_edit_password_save_func();
+  });
+  //退出
+  $(document).on("click", "#header_log_out_modle", function() {
+    header_edit_log_out_modle_func();
+  });
+  $(document).on("click", "#header_log_out_btn", function() {
+    header_log_out_data_func();
+  });
+  nav_menu_output("#nav_menu");
+  enterprise_management_output("#enterprise_management_content")
+  //日历插件
+  widget_datepicker_init();
+  // 复选框
+  enterprise_management_checkbox();
+  // 初始化
+  enterprise_management_clear_raw_data();
+  // 服务器数据
+  enterprise_management_server_data_cover();
+  // 赋值
+  enterprise_management_fill_variable_data();
+  // 企业信息展示和隐藏
+  enterprise_management_show_or_hide();
+  // 点击时企业信息展示和隐藏
+  $(document).on('ifChanged','#enterprise_management_condition input',function(){
+    enterprise_management_show_or_hide();
+  })
+  //分页
+  $(document).on("click", "#enterprise_management_pages li", function() {
+    var enterprise_managemente_pages = $(this);
+    enterprise_management_pages_fun(enterprise_managemente_pages);
+    enterprise_management_show_or_hide();
+  });
+  //全部列出
+  $(document).on("click", "#enterprise_management_all_list", function() {
+    enterprise_management_search_all();
+  });
+  // 添加企业信息模态框
+  $(document).on("click", "#enterprise_management_add_info", function() {
+    enterprise_management_add_modal();
+  });
+  // 添加企业信息
+  $(document).on("click", "#enterprise_management_add_modal .add_btn", function() {
+    enterprise_management_add_info();
+  });
+  // 修改企业信息模态框
+  $(document).on("click", "#enterprise_management_edit_info", function() {
+    var uuid = $(this).data("uuid");
+    enterprise_management_get_certificate(uuid);
+    enterprise_management_edit_modal(uuid);
+    enterprise_management_search_condition = {};
+    enterprise_management_server_data_cover();
+    enterprise_management_fill_variable_data();
+    enterprise_management_show_or_hide();
+ });
+  // 修改企业信息
+  $(document).on("click", "#enterprise_management_edit_modal .edit_btn", function() {
+    var enterprise_management_edit_uuid = $(this);
+    enterprise_management_edit_info(enterprise_management_edit_uuid);
+  });
+  // 企业详情模态框
+  $(document).on("click", "#enterprise_management_detail_info", function() {
+    var uuid = $(this).data("uuid");
+    enterprise_management_get_certificate(uuid);
+    enterprise_management_detail_modal();
+    enterprise_management_search_condition = {};
+    enterprise_management_server_data_cover();
+    enterprise_management_fill_variable_data();
+    enterprise_management_show_or_hide();
+  });
+  // 删除企业信息模态框
+  $(document).on("click", "#enterprise_management_delete_info", function() {
+    var uuid = $(this).data("uuid");
+    enterprise_management_delete_modal(uuid);
+  });
+  // 删除企业信息
+  $(document).on("click", "#enterprise_management_delete_modal .remove", function() {
+    var uuid = $(this).data("uuid");
+    enterprise_management_delete_info(uuid);
+  });
+  // 企业名称搜索
+  $(document).on("click", "#enterprise_management_search_name", function() {
+    enterprise_management_search_name();
+  });
+  // 企业简称搜索
+  $(document).on("click", "#enterprise_management_search_short_name", function() {
+    enterprise_management_search_short_name();
+  });
+  //修改密码
+  $(document).on("click", "#header_edit_password_prop", function() {
+    header_edit_password_func();
+  });
+  //保存密码
+  $(document).on("click", "#header_edit_password_btn", function() {
+    header_edit_password_save_func();
+  });
+  //退出
+  $(document).on("click", "#header_log_out_modle", function() {
+    header_edit_log_out_modle_func();
+  });
+  $(document).on("click", "#header_log_out_btn", function() {
+    header_log_out_data_func();
+  });
+}); 
+</script>
+<style type="text/css">
+  .enterprise_management_mt0{
+    margin-top: 0!important;
+    margin-right: 0;
+  }
+  .enterprise_management_mt20{
+    margin-top: 10px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+</style>
+<title></title>
+</head>
+<body>
+  <div id = "header"></div>
+  <div class = "row enterprise_management_mt0">
+    <div id = "nav_menu" class = "col-lg-2"></div>
+    <div class = "col-lg-10 enterprise_management_mt20" id = "enterprise_management_content"></div>
+  </div>
+</body>
+</html>

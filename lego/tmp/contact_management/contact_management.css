@@ -1,0 +1,17 @@
+.contact_management_mt20 {
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+.contact_management_pb0 {
+  padding-bottom: 0;
+}
+.contact_management_nb th, .contact_management_nb td {
+  border: none!important;
+}
+#contact_management_success {
+  color: #337ab7;
+}
+#contact_management_list thead p {
+  text-align: center;
+  margin-bottom: 20px; 
+}

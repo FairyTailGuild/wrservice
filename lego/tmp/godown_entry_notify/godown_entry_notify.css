@@ -1,0 +1,12 @@
+/**
+ * @author yangyongxia
+ */
+
+@charset "utf-8";
+.godown_entry_notify_mt20{margin-top: 20px;}
+.godown_entry_notify_ml15{margin-left: 15px;}
+.godown_entry_notifys_none{display: none;}
+.godown_entry_notifys_center{text-align: center;}
+#ui-datepicker-div{z-index: 1000000!important;}
+#godown_entry_notify_list tbody p{text-align: center;}
+#godown_entry_notify_list{margin-bottom: 0!important;}

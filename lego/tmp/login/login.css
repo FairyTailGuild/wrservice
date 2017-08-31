@@ -1,0 +1,6 @@
+/**
+ * @author wangdi
+ */
+
+.login_middle{position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);width: 330px;}
+.login_ml5{margin-left: 5px;}

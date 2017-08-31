@@ -1,0 +1,152 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv = "Content-Type" content = "text/html; charset=utf-8">
+  <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
+  <meta name = "viewport" content = "width=device-width, initial-scale=1">
+  <link rel = "stylesheet" href = "../../plugin/bootstrap/3.3.7/css/bootstrap.css">
+  <link rel = "stylesheet" href = "../../css/custom_modal.css">
+  <link rel = "stylesheet" href = "../upload_attachment/upload_attachment.css"/>
+  <link rel = "stylesheet" href = "settlement_bill_buy.css">
+  <script src = "../../plugin/jquery/1.12.4/jquery.min.js"></script>    
+  <script src = "../../plugin/bootstrap/3.3.7/js/bootstrap.js"></script>
+  <script src = "../../js/toolkit.js"></script>
+  <script src = "../../js/configure.js"></script>
+  <script src = "../upload_attachment/upload_attachment.js" type = "text/javascript" charset = "utf-8"></script>
+  <script src = "settlement_bill_buy.js"></script>
+  <script>
+    $(document).ready(function() {
+//    settlement_bill_buy_output("#settlement_bill_buy_content");
+      //清空原始数据
+      settlement_bill_buy_clear_raw_data();
+      //服务器数据
+      settlement_bill_buy_server_data_cover();
+      //加载数据
+      settlement_bill_buy_fill_variable_data();     
+      //添加采购对账单模态框
+      $(document).on("click", "#settlement_bill_buy_add_modle", function() {
+        settlement_bill_buy_add_modle_func($(this));
+      });
+      //实际损耗
+      $(document).on("blur",".unload_quantity_blur,.load_quantity_blur",function(){
+        actual_loss_change($(this));
+      });
+      //合计 应退货款
+      $(document).on("blur",".volume_corresponding,.price_corresponding,.amount_corresponding",function(){
+        all_should_change($(this));
+      });
+      //结算量  发票数量的关系
+      $(document).on("blur",".volume_corresponding",function(){
+        volume_corresponding__change($(this));
+      });
+      //添加采购对账单数据
+      $(document).on("click", "#settlement_bill_buy_add_data_btn", function() {
+        settlement_bill_buy_add_data_func($(this), "0", "1");
+      });
+      //修改采购对账单模态框
+      $(document).on("click", ".settlement_bill_buy_modle_pencil", function() {
+        settlement_bill_buy_edit_modle_func($(this));
+      });
+      //修改采购对账单数据
+      $(document).on("click", "#settlement_bill_buy_edit_data_btn", function() {
+        settlement_bill_buy_edit_data_func($(this), "0", "1");
+      });
+      //删除采购对账单模态框
+      $(document).on("click", ".settlement_bill_buy_modle_remove", function() {
+        settlement_bill_buy_delete_modle_func($(this));
+      });
+      //删除采购对账单数据
+      $(document).on("click", "#settlement_bill_buy_delete_modle_prop_btn", function() {
+        settlement_bill_buy_delete_data_func($(this));
+      });
+      //详情
+      $(document).on("click", ".settlement_bill_buy_modle_info", function() {
+        settlement_bill_buy_info_modle_func($(this));
+      });
+    });
+  </script>
+</head>
+<body>
+  <!--id ="settlement_bill_buy_"+trade_contract_code-->
+  <!--<div id = "settlement_bill_buy_content"></div>-->
+  <div class = "panel panel-primary ">
+    <div class = "panel-heading clearfix">采购对账单<span class = "glyphicon glyphicon-plus pull-right" id = "settlement_bill_buy_add_modle" contract_code_uuid = "6dc62fc9173544a9a11fd8b7c562274a" contract_code = "JYH-FJ-17731221"></span></div>
+    <div class = "panel-body">
+        <div class = "row">
+          <div class = "col-lg-12">
+            <table cellpadding = "0" cellspacing = "0" border = "0" width = "100%" class = "table">
+              <thead>
+                <tr>
+                  <th>装货量</th>
+                  <th>卸货量</th>
+                  <th>约定损耗</th>
+                  <th>实际损耗</th>
+                  <th>结算量</th>
+                  <th>货物单价</th>
+                  <th>发票数量</th>
+                  <th>合计价格</th>
+                  <th>已付货款</th>
+                  <th>应退货款</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody class = "settlement_bill_buy_box">
+                <tr>
+                  <td>300</td>
+                  <td>300</td>
+                  <td>3‰</td>
+                  <td>2‰</td>
+                  <td>3000</td>
+                  <td>3000</td>
+                  <td>3000</td>
+                  <td>3000</td>
+                  <td>3600</td>
+                  <td>300</td>
+                  <td>
+                    <span class = "glyphicon glyphicon-info-sign settlement_bill_buy_ml15"></span>
+                    <span class = "glyphicon glyphicon-pencil settlement_bill_buy_ml15"></span>
+                    <span class = "glyphicon glyphicon-remove settlement_bill_buy_ml15"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>300</td>
+                  <td>300</td>
+                  <td>3‰</td>
+                  <td>2‰</td>
+                  <td>3000</td>
+                  <td>3000</td>
+                  <td>3000</td>
+                  <td>3000</td>
+                  <td>3600</td>
+                  <td>300</td>
+                  <td>
+                    <span class = "glyphicon glyphicon-info-sign settlement_bill_buy_ml15"></span>
+                    <span class = "glyphicon glyphicon-pencil settlement_bill_buy_ml15"></span>
+                    <span class = "glyphicon glyphicon-remove settlement_bill_buy_ml15"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>300</td>
+                  <td>300</td>
+                  <td>3‰</td>
+                  <td>2‰</td>
+                  <td>3000</td>
+                  <td>3000</td>
+                  <td>3000</td>
+                  <td>3000</td>
+                  <td>3600</td>
+                  <td>300</td>
+                  <td>
+                    <span class = "glyphicon glyphicon-info-sign settlement_bill_buy_ml15"></span>
+                    <span class = "glyphicon glyphicon-pencil settlement_bill_buy_ml15"></span>
+                    <span class = "glyphicon glyphicon-remove settlement_bill_buy_ml15"></span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+</html>

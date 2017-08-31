@@ -1,0 +1,197 @@
+﻿<!DOCTYPE html>
+<html class = "org_structure_height100">
+<head>
+<meta charset = "utf-8" />
+<link rel = "stylesheet" type = "text/css" href = "../../plugin/bootstrap/3.3.7/css/bootstrap.css"/>
+<link rel="stylesheet" type="text/css" href=" ../../plugin/icheck/1.x/skins/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/custom_modal.css"/>
+<link rel = "stylesheet" href = "../nav_menu/nav_menu.css">
+<link rel = "stylesheet" href = "../header/header.css">
+<link rel="stylesheet" type="text/css" href="../org_structure/org_structure.css"/>
+<script src = "../../plugin/jquery/1.12.4/jquery.min.js" type = "text/javascript" charset = "utf-8"></script>
+<script src = "../../plugin/bootstrap/3.3.7/js/bootstrap.js" type = "text/javascript" charset = "utf-8"></script>
+<script src="../../plugin/icheck/1.x/icheck.min.js" type="text/javascript" charset="utf-8"></script>
+<script src = "../../js/toolkit.js" type = "text/javascript" charset = "utf-8"></script>
+<script src="../../js/configure.js" type="text/javascript" charset="utf-8"></script>
+<script src = "../nav_menu/nav_menu.js"></script>
+<script src = "../header/header.js"></script>
+<script src = "../org_structure/org_structure.js" type = "text/javascript" charset = "utf-8"></script>
+<script src = "../check_login/check_login.js" type = "text/javascript" charset = "utf-8"></script>
+<script type = "text/javascript">
+$(document).ready(function() {
+  check_login();
+  header_output("#header");
+  $(document).on("click", "#header_edit_password_prop", function() {
+    header_edit_password_func();
+  });
+  //保存密码
+  $(document).on("click", "#header_edit_password_btn", function() {
+    header_edit_password_save_func();
+  });
+  //退出
+  $(document).on("click", "#header_log_out_modle", function() {
+    header_edit_log_out_modle_func();
+  });
+  $(document).on("click", "#header_log_out_btn", function() {
+    header_log_out_data_func();
+  });
+  nav_menu_output("#nav_menu");
+  org_structure_output("#org_structure_content");
+  org_structure_clear_raw_data();
+  org_structure_get_root_department_data_fill();
+  org_structure_server_data_cover();
+  org_structure_fill_variable_data();
+  //添加根部门弹窗  
+  $(document).on("click", ".org_structure_enterprise_add", function() {
+    org_structure_add_enterprise_func();
+  });
+  //添加根部门数据
+  $(document).on("click" ,"#org_structure_add_enterprise .add_btn" ,function() {    
+    org_structure_add_enterprise_data_func();
+  });
+  //添加部门弹窗 
+  $(document).on("click", ".org_structure_department_add", function() {
+    var parent_uuid = $(this).data("uuid");
+    org_structure_add_department_func(parent_uuid);
+  });
+  //添加部门数据
+  $(document).on("click" ,"#org_structure_add_department .add_btn" ,function() {
+    var parent_uuid = $(this).data("parent_uuid");
+    org_structure_add_department_data_func(parent_uuid);
+  });
+  //修改根部门弹窗
+  $(document).on("click", ".org_structure_root_department_edit", function() {
+    var name = $(this).data("name");
+    var uuid = $(this).data("uuid");
+    org_structure_edit_enterprise_func(name, uuid);
+  });
+  //修改根部门数据
+  $(document).on("click" ,"#org_structure_edit_root_department .edit_btn" ,function() {
+    var uuid = $(this).data("uuid");
+    org_structure_edit_enterprise_data_func(uuid);
+  });
+  //修改部门弹窗
+  $(document).on("click", ".org_structure_department_edit", function() {
+    var name = $(this).data("name");
+    var uuid = $(this).data("uuid");
+    var parent_uuid = $(this).data("parent_uuid");
+    org_structure_edit_department_func(name, uuid, parent_uuid);
+  });
+  //修改部门数据
+  $(document).on("click" ,"#org_structure_edit_department .edit_btn" ,function() {
+    var uuid = $(this).data("uuid");
+    var parent_uuid = $(this).data("parent_uuid");
+    org_structure_edit_department_data_func(uuid, parent_uuid);
+  });
+  //删除部门弹窗
+  $(document).on("click", ".org_structure_department_delete", function() {
+    var uuid = $(this).data("uuid");
+    org_structure_delete_department_func(uuid);
+  });
+  //删除部门数据
+  $(document).on("click" ,"#org_structure_delete_department .remove" ,function() {
+    var uuid = $(this).data("uuid");
+    org_structure_delete_department_data_func(uuid);
+  });
+  //添加岗位
+  $(document).on("click", ".org_structure_position_add", function() {
+    var department_uuid = $(this).data("uuid");
+    org_structure_add_position_func(department_uuid)
+  });
+  //添加岗位数据
+  $(document).on("click" ,"#org_structure_add_position .add_btn" ,function() {
+    var department_uuid = $(this).data("department_uuid");
+    org_structure_add_position_data_func(department_uuid);
+  });
+  //修改岗位
+  $(document).on("click", ".org_structure_position_edit", function() {
+    var name = $(this).data("name");
+    var uuid = $(this).data("uuid");
+    var department_uuid = $(this).data("parent_uuid");
+    org_structure_edit_position_func(name, uuid, department_uuid);
+  });
+  //修改岗位数据
+  $(document).on("click" ,"#org_structure_edit_position .edit_btn" ,function() {
+    var uuid = $(this).data("uuid");
+    var department_uuid = $(this).data("department_uuid");
+    org_structure_edit_position_data_func(uuid, department_uuid);
+  });
+  //删除岗位弹窗
+  $(document).on("click", ".org_structure_position_delete", function() {
+    var uuid = $(this).data("uuid");
+    org_structure_delete_position_func(uuid);
+  });
+  //删除岗位数据
+  $(document).on("click" ,"#org_structure_delete_position .remove" ,function() {
+    var uuid = $(this).data("uuid");
+    org_structure_delete_position_data_func(uuid);
+  });
+  //添加员工
+  $(document).on("click", ".org_structure_employee_add", function() {
+    var position_uuid = $(this).data("uuid");
+    org_structure_add_employee_func(position_uuid);
+  });
+  //添加员工数据
+  $(document).on("click" ,"#org_structure_add_employee .add_btn" ,function() {
+    var position_uuid = $(this).data("position_uuid");
+    org_structure_add_employee_data_func(position_uuid);
+  });
+  //修改员工
+  $(document).on("click", ".org_structure_employee_edit", function() {
+    var user_uuid = $(this).data("user_uuid");
+    var position_uuid = $(this).data("parent_uuid")
+    org_structure_edit_employee_func(position_uuid, user_uuid);
+  });
+  //修改员工数据
+  $(document).on("click" ,"#org_structure_edit_employee .edit_btn" ,function() {
+    var user_uuid = $(this).data("user_uuid");
+    var position_uuid = $(this).data("position_uuid")
+    org_structure_edit_employee_data_func(user_uuid, position_uuid);
+  });
+  //删除员工弹窗
+  $(document).on("click", ".org_structure_employee_delete", function() {
+    var user_uuid = $(this).data("user_uuid");
+    org_structure_delete_employee_func(user_uuid);
+  });
+  //删除员工数据
+  $(document).on("click" ,"#org_structure_delete_employee .remove" ,function() {
+    var user_uuid = $(this).data("user_uuid");
+    org_structure_delete_employee_data_func(user_uuid);
+  });
+  //修改密码
+  $(document).on("click", "#header_edit_password_prop", function() {
+    header_edit_password_func();
+  });
+  //保存密码
+  $(document).on("click", "#header_edit_password_btn", function() {
+    header_edit_password_save_func();
+  });
+  //退出
+  $(document).on("click", "#header_log_out_modle", function() {
+    header_edit_log_out_modle_func();
+  });
+  $(document).on("click", "#header_log_out_btn", function() {
+    header_log_out_data_func();
+  });
+})
+</script>
+<style type="text/css">
+	.org_structure_mt0{
+    margin-top: 0!important;
+    margin-right: 0;
+  }
+  .org_structure_mt20{
+    margin-top: 10px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+</style>
+</head>
+<body>
+  <div id = "header"></div>
+  <div class = "row org_structure_mt0">
+    <div id = "nav_menu" class = "col-lg-2"></div>
+    <div class = "col-lg-10 org_structure_mt20" id = "org_structure_content"></div>
+  </div>
+</body>
+</html>

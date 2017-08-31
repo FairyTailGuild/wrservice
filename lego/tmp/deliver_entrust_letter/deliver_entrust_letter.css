@@ -1,0 +1,11 @@
+/**
+ * @author yangyongxia
+ */
+
+@charset "utf-8";
+.deliver_entrust_letter_mt20{margin-top: 20px;}
+.deliver_entrust_letter_ml15{margin-left: 15px;}
+.deliver_entrust_letters_none{display: none;}
+.deliver_entrust_letters_center{text-align: center;}
+#ui-datepicker-div{z-index: 1000000!important;}
+#deliver_entrust_letter_list tbody td, #deliver_entrust_letter_list thead th{text-align: center;}

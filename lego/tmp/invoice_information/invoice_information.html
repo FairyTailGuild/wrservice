@@ -1,0 +1,151 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv = "Content-Type" content = "text/html; charset=utf-8">
+  <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
+  <meta name = "viewport" content = "width=device-width, initial-scale=1">
+  <link rel = "stylesheet" href = "../../plugin/bootstrap/3.3.7/css/bootstrap.css">
+  <link rel = "stylesheet" href = "../../plugin/jquery_ui/1.12.1/jquery-ui.min.css">
+  <link rel = "stylesheet" href = "../../plugin/jquery_timepicker_addon/1.6.3/jquery-ui-timepicker-addon.css" />
+  <link rel = "stylesheet" href="../../plugin/icheck/1.x/skins/all.css" type = "text/css"/>
+  <link rel = "stylesheet" href = "../../css/custom_modal.css">
+  <link rel = "stylesheet" href = "../upload_attachment/upload_attachment.css"/>
+  <link rel = "stylesheet" href = "invoice_information.css">
+  <script src = "../../plugin/jquery/1.12.4/jquery.min.js"></script>    
+  <script src = "../../plugin/jquery_ui/1.12.1/jquery-ui.min.js"></script>
+  <script src = "../../plugin/bootstrap/3.3.7/js/bootstrap.js"></script>
+  <script src = "../../plugin/jquery_timepicker_addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
+  <script src = "../../plugin/icheck/1.x/icheck.js" type = "text/javascript" charset="utf-8"></script>
+  <script src = "../../plugin/jquery_timepicker_addon/1.6.3/init.js"></script>
+  <script src = "../../js/toolkit.js"></script>
+  <script src = "../../js/configure.js"></script>
+  <script src = "../upload_attachment/upload_attachment.js" type = "text/javascript" charset = "utf-8"></script>
+  <script src = "invoice_information.js"></script>
+  <script>
+    $(document).ready(function() {
+//    invoice_information_output("#invoice_information_content");
+      //日历插件
+      widget_datepicker_init();
+      //清空原始数据
+      invoice_information_clear_raw_data();
+      //服务器数据
+      invoice_information_server_data_cover();
+      //加载数据
+      invoice_information_fill_variable_data();
+      //税率
+      $(document).on("focus", ".invoice_information_tax_rate", function(){
+        invoice_information_tax_focus_change($(this));
+      });
+      $(document).on("blur", ".invoice_information_tax_rate", function(){
+        invoice_information_tax_blur_change($(this));
+      });
+      //合计
+      $(document).on("blur",".invoice_information_quantity,.invoice_information_price",function(){
+        all_should_change_price($(this));
+      });
+      //添加发票信息模态框
+      $(document).on("click", "#invoice_information_add_modle", function() {
+        invoice_information_add_modle_func($(this));
+      });
+      //添加发票信息数据
+      $(document).on("click", "#invoice_information_add_data_btn", function() {
+        invoice_information_add_data_func($(this));
+      });
+      //修改发票信息模态框
+      $(document).on("click", ".invoice_information_modle_pencil", function() {
+        invoice_information_edit_modle_func($(this));
+      });
+      //修改发票信息数据
+      $(document).on("click", "#invoice_information_edit_data_btn", function() {
+        invoice_information_edit_data_func($(this));
+      });
+      //删除发票信息模态框
+      $(document).on("click", ".invoice_information_modle_remove", function() {
+        invoice_information_delete_modle_func($(this));
+      });
+      //删除发票信息数据
+      $(document).on("click", "#invoice_information_delete_modle_prop_btn", function() {
+        invoice_information_delete_data_func($(this));
+      });
+      //详情
+      $(document).on("click", ".invoice_information_modle_info", function() {
+        invoice_information_info_modle_func($(this));
+      });
+    });
+  </script>
+</head>
+<body>
+  <div id = "invoice_information_content"></div>
+  <div class = "panel panel-primary ">
+    <div class = "panel-heading clearfix">发票信息  [应开发票:<span class="invoice_information_should_be">12.00</span>] [已开发票:<span class="invoice_information_already">0</span>] [未开发票:<span class="invoice_information_no">0</span>]<span class = "glyphicon glyphicon-plus pull-right" id = "invoice_information_add_modle"></span></div>
+    <div class = "panel-body">
+        <div class = "row">
+          <div class = "col-lg-12">
+            <table cellpadding = "0" cellspacing = "0" border = "0" width = "100%" class = "table">
+              <thead>
+                <tr>
+                  <th>库存类型</th>
+                  <th>名称</th>
+                  <th>单价（元）</th>
+                  <th>数量</th>
+                  <th>单位</th>
+                  <th>税率</th>
+                  <th>合计</th>
+                  <th>开票日期</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody class = "invoice_information_box">
+                <tr>
+                  <td>出库</td>
+                  <td>甲基丁</td>
+                  <td>3</td>
+                  <td>200</td>
+                  <td>吨</td>
+                  <td>17％</td>
+                  <td>600000</td>
+                  <td>2017-05-06</td>
+                  <td>
+                    <span class = "glyphicon glyphicon-info-sign invoice_information_ml15"></span>
+                    <span class = "glyphicon glyphicon-pencil invoice_information_ml15"></span>
+                    <span class = "glyphicon glyphicon-remove invoice_information_ml15"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>出库</td>
+                  <td>甲基丁</td>
+                  <td>3000</td>
+                  <td>200</td>
+                  <td>吨</td>
+                  <td>17％</td>
+                  <td>600000</td>
+                  <td>2017-05-06</td>
+                  <td>
+                    <span class = "glyphicon glyphicon-info-sign invoice_information_ml15"></span>
+                    <span class = "glyphicon glyphicon-pencil invoice_information_ml15"></span>
+                    <span class = "glyphicon glyphicon-remove invoice_information_ml15"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>出库</td>
+                  <td>甲基丁</td>
+                  <td>3000</td>
+                  <td>200</td>
+                  <td>吨</td>
+                  <td>17％</td>
+                  <td>600000</td>
+                  <td>2017-05-06</td>
+                  <td>
+                    <span class = "glyphicon glyphicon-info-sign invoice_information_ml15"></span>
+                    <span class = "glyphicon glyphicon-pencil invoice_information_ml15"></span>
+                    <span class = "glyphicon glyphicon-remove invoice_information_ml15"></span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+</html>

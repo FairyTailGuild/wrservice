@@ -1,0 +1,10 @@
+/**
+ * @author wangdi
+ */
+
+@charset "utf-8";
+.invoice_information_mt20{margin-top: 20px;}
+.invoice_information_ml15{margin-left: 15px;}
+.invoice_information_none{display: none;}
+.invoice_information_center{text-align: center;}
+.table {margin-bottom: 0px;}
